@@ -1,2 +1,5 @@
 # FullStackOpen-2022
-Proyectos y ejercicios realizados para el curso Full stack open 2022.
+Exercises for the course: Full stack open 2022
+
+using Javascript, React, Node, Express, REST API, Typescript and more technologies
+by Juanescacha.
