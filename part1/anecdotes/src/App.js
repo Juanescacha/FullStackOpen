@@ -15,6 +15,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(arrayVotes);
+  const [mayor, setMayor] = useState(0);
 
   const handleNextAnecdote = () => {
     let aleatorio = Math.floor(Math.random() * anecdotes.length);
@@ -22,19 +23,29 @@ const App = () => {
   };
 
   const handleVotes = () => {
+    let valorMayor = 0;
     const copy = [...votes];
     copy[selected] += 1;
+    for (let i = 0; i < copy.length; i++) {
+      if (valorMayor < copy[i]) {
+        valorMayor = copy[i];
+        setMayor(i);
+      }
+    }
     return setVotes(copy);
   };
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       {anecdotes[selected]}
       <div>has {votes[selected]} votes</div>
       <div>
-        <button onClick={handleNextAnecdote}>next anecdote</button>
         <button onClick={handleVotes}>vote</button>
+        <button onClick={handleNextAnecdote}>next anecdote</button>
       </div>
+      <h2>Anecdote with most votes</h2>
+      {anecdotes[mayor]}
     </div>
   );
 };
