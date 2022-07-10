@@ -10,7 +10,7 @@ const Statistics = ({ good, neutral, bad }) => {
   }
 
   return (
-    <div>
+    <table>
       <StatisticLine text="good" value={good} />
       <StatisticLine text="neutral" value={neutral} />
       <StatisticLine text="bad" value={bad} />
@@ -24,15 +24,15 @@ const Statistics = ({ good, neutral, bad }) => {
         text="positive"
         value={(good / (good + neutral + bad)) * 100 + "%"}
       />
-    </div>
+    </table>
   );
 };
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <div>
-      {text} {value}
-    </div>
+    <tr>
+      <td>{text}</td> <td>{value}</td>
+    </tr>
   );
 };
 
