@@ -1,6 +1,12 @@
 const Header = ({ course }) => <h1>{course.name}</h1>;
 
-const Total = ({ sum }) => <p>Number of exercises {sum}</p>;
+const Total = ({ parts }) => {
+  let sum = 0;
+  for (let i = 0; i < parts.length; i++) {
+    sum += parts[i].exercises;
+  }
+  return <b>Total of {sum} exercises</b>;
+};
 
 const Part = ({ part }) => (
   <p>
@@ -9,7 +15,7 @@ const Part = ({ part }) => (
 );
 
 const Content = ({ parts }) => {
-  const partsElements = parts.map((part, i) => <Part key={i} part={part} />);
+  const partsElements = parts.map((part) => <Part key={part.id} part={part} />);
 
   return <>{partsElements}</>;
 };
@@ -18,6 +24,7 @@ const Course = ({ course }) => (
   <>
     <Header course={course} />
     <Content parts={course.parts} />
+    <Total parts={course.parts} />
   </>
 );
 
@@ -40,6 +47,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
