@@ -11,7 +11,23 @@ const App = () => {
       name: newName,
     };
 
-    setPersons(persons.concat(personObject));
+    let copy = false;
+
+    for (let i = 0; i < persons.length; i++) {
+      // this is for check if all the object is the same
+      // if (JSON.stringify(persons[i]) === JSON.stringify(personObject)) {
+      //   copy = true;
+      // }
+      // this is to check only if the name is the same
+      if (persons[i].name === personObject.name) {
+        copy = true;
+      }
+    }
+    if (copy) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons(persons.concat(personObject));
+    }
     setNewName("");
   };
 
