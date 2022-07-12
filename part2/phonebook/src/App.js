@@ -45,10 +45,7 @@ const App = () => {
   const [newSearchName, setNewSearchName] = useState("");
 
   const fetchHook = () => {
-    console.log("effecto");
-
     const eventHandler = (response) => {
-      console.log("promesa completada");
       setPersons(response.data);
     };
     axios.get("http://localhost:3001/persons").then(eventHandler);
