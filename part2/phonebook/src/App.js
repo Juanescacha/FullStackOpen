@@ -1,5 +1,42 @@
 import { useState } from "react";
 
+const Filter = ({ newSearchName, handleSearchName }) => (
+  <>
+    filter shown with
+    <input value={newSearchName} onChange={handleSearchName} />
+  </>
+);
+
+const PersonForm = ({
+  addPerson,
+  newName,
+  handleNameChange,
+  newNumber,
+  handleNumberChange,
+}) => (
+  <form onSubmit={addPerson}>
+    <div>
+      name: <input value={newName} onChange={handleNameChange} />
+    </div>
+    <div>
+      number: <input value={newNumber} onChange={handleNumberChange} />
+    </div>
+    <div>
+      <button type="submit">add</button>
+    </div>
+  </form>
+);
+
+const Persons = ({ personsToShow }) => (
+  <>
+    {personsToShow.map((person) => (
+      <div key={person.name}>
+        {person.name} {person.number}
+      </div>
+    ))}
+  </>
+);
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "040-123456", id: 1 },
@@ -61,26 +98,21 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      filter shown with{" "}
-      <input value={newSearchName} onChange={handleSearchName} />
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {personsToShow.map((person) => (
-        <div key={person.name}>
-          {person.name} {person.number}
-        </div>
-      ))}
+      <h1>Phonebook</h1>
+      <Filter
+        newSearchName={newSearchName}
+        handleSearchName={handleSearchName}
+      />
+      <h1>Add a new</h1>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
+      <h1>Numbers</h1>
+      <Persons personsToShow={personsToShow} />
     </div>
   );
 };
