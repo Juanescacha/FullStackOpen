@@ -30,7 +30,7 @@ const PersonForm = ({
 
 const Persons = ({ personsToShow }) => (
   <>
-    {personsToShow.map((person) => (
+    {personsToShow.map(person => (
       <div key={person.name}>
         {person.name} {person.number}
       </div>
@@ -45,7 +45,7 @@ const App = () => {
   const [newSearchName, setNewSearchName] = useState("");
 
   const fetchHook = () => {
-    const eventHandler = (response) => {
+    const eventHandler = response => {
       setPersons(response.data);
     };
     axios.get("http://localhost:3001/persons").then(eventHandler);
@@ -53,7 +53,7 @@ const App = () => {
 
   useEffect(fetchHook, []);
 
-  const addPerson = (event) => {
+  const addPerson = event => {
     event.preventDefault();
 
     const personObject = {
@@ -82,22 +82,22 @@ const App = () => {
     setNewNumber("");
   };
 
-  const handleNameChange = (event) => {
+  const handleNameChange = event => {
     setNewName(event.target.value);
   };
 
-  const handleNumberChange = (event) => {
+  const handleNumberChange = event => {
     setNewNumber(event.target.value);
   };
 
-  const handleSearchName = (event) => {
+  const handleSearchName = event => {
     setNewSearchName(event.target.value);
   };
 
   const personsToShow =
     !newSearchName || newSearchName === ""
       ? persons
-      : persons.filter((person) =>
+      : persons.filter(person =>
           person.name.toLowerCase().includes(newSearchName.toLowerCase())
         );
 
