@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 const Countries = ({ countriesToShow }) => (
   <>
@@ -7,23 +7,23 @@ const Countries = ({ countriesToShow }) => (
       <div key={i}>{country.name.common}</div>
     ))}
   </>
-);
+)
 
 function App() {
-  const [newSearchCountry, setNewSearchCountry] = useState("");
-  const [countries, setCountries] = useState([]);
+  const [newSearchCountry, setNewSearchCountry] = useState("")
+  const [countries, setCountries] = useState([])
   const fetchHook = () => {
     const eventHandler = response => {
-      setCountries(response.data);
-    };
-    axios.get("https://restcountries.com/v3.1/all").then(eventHandler);
-  };
+      setCountries(response.data)
+    }
+    axios.get("https://restcountries.com/v3.1/all").then(eventHandler)
+  }
 
   const handleSearchCountry = event => {
-    setNewSearchCountry(event.target.value);
-  };
+    setNewSearchCountry(event.target.value)
+  }
 
-  useEffect(fetchHook, []);
+  useEffect(fetchHook, [])
 
   const countriesToShow =
     !newSearchCountry || newSearchCountry === ""
@@ -32,7 +32,7 @@ function App() {
           country.name.common
             .toLowerCase()
             .includes(newSearchCountry.toLocaleLowerCase())
-        );
+        )
 
   return (
     <div>
@@ -40,7 +40,7 @@ function App() {
       <input value={newSearchCountry} onChange={handleSearchCountry} />
       <Countries countriesToShow={countriesToShow} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
