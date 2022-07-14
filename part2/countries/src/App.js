@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-const Countries = ({ countriesToShow, newSearchCountry }) => {
+const Countries = ({ countriesToShow, newSearchCountry, handleClick }) => {
   if (newSearchCountry === "") {
     return <div>Search a Country</div>
   } else {
@@ -12,7 +12,12 @@ const Countries = ({ countriesToShow, newSearchCountry }) => {
         return (
           <>
             {countriesToShow.map((country, i) => (
-              <div key={i}>{country.name.common}</div>
+              <div key={i}>
+                {country.name.common}{" "}
+                <button onClick={() => handleClick(country.name.common)}>
+                  show
+                </button>
+              </div>
             ))}
           </>
         )
@@ -45,6 +50,11 @@ const Countries = ({ countriesToShow, newSearchCountry }) => {
 function App() {
   const [newSearchCountry, setNewSearchCountry] = useState("")
   const [countries, setCountries] = useState([])
+
+  function handleClick(countryName) {
+    setNewSearchCountry(countryName)
+  }
+
   const fetchHook = () => {
     const eventHandler = response => {
       setCountries(response.data)
@@ -71,6 +81,7 @@ function App() {
       <Countries
         countriesToShow={countriesToShow}
         newSearchCountry={newSearchCountry}
+        handleClick={handleClick}
       />
     </div>
   )
