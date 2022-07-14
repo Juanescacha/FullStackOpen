@@ -17,7 +17,7 @@ const Countries = ({ countriesToShow, newSearchCountry }) => {
           </>
         )
       } else {
-        if (countriesToShow.length == 1) {
+        if (countriesToShow.length === 1) {
           return (
             <div>
               <h1>{countriesToShow[0].name.common}</h1>
