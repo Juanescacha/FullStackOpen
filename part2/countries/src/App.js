@@ -1,6 +1,43 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
+const Weather = ({ country }) => {
+  const [weatherData, setWeatherData] = useState({
+    weather: [{ icon: "01d" }],
+    main: { temp: 0 },
+    wind: { speed: 0 },
+  })
+  const key = process.env.REACT_APP_API_KEY
+  const latitude = country.capitalInfo.latlng[0]
+  const longitude = country.capitalInfo.latlng[1]
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=metric`
+  const iconCode = weatherData.weather[0].icon
+  const imageLink = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
+  const temperature = weatherData.main.temp
+  const wind = weatherData.wind.speed
+
+  function fetchHook(link) {
+    const eventHandler = response => {
+      setWeatherData(response.data)
+    }
+    axios.get(link).then(eventHandler)
+    console.log(link)
+  }
+
+  useEffect(() => {
+    fetchHook(url)
+  }, [])
+
+  return (
+    <>
+      <h3>Weather in {country.capital}</h3>
+      <div>temperature {temperature.toFixed(2)} Celcius</div>
+      <img src={imageLink} alt="weatherIcon" />
+      <div>wind {wind} m/s</div>
+    </>
+  )
+}
+
 const Countries = ({ countriesToShow, newSearchCountry, handleClick }) => {
   if (newSearchCountry === "") {
     return <div>Search a Country</div>
@@ -23,6 +60,10 @@ const Countries = ({ countriesToShow, newSearchCountry, handleClick }) => {
         )
       } else {
         if (countriesToShow.length === 1) {
+          let latitude = countriesToShow[0].capitalInfo.latlng[0]
+          let longitude = countriesToShow[0].capitalInfo.latlng[1]
+          let key = "123"
+          let units = "metric"
           return (
             <div>
               <h1>{countriesToShow[0].name.common}</h1>
@@ -38,6 +79,7 @@ const Countries = ({ countriesToShow, newSearchCountry, handleClick }) => {
                 alt={countriesToShow[0].flag}
                 src={countriesToShow[0].flags.png}
               />
+              <Weather country={countriesToShow[0]} />
             </div>
           )
         } else {
