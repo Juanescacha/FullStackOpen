@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import personService from "./services/persons"
+import "./app.css"
 
 const Filter = ({ newSearchName, handleSearchName }) => (
   <>
-    filter shown with
+    filter shown with{" "}
     <input value={newSearchName} onChange={handleSearchName} />
   </>
 )
@@ -54,11 +55,21 @@ const DeleteButton = ({ id, persons, setPersons, name }) => {
   return <button onClick={handler}>delete</button>
 }
 
+const Notification = ({ message }) => {
+  if (message[0] === "") {
+    return null
+  }
+  const type = message[1] ? "success" : "error"
+
+  return <div className={type}>{message[0]}</div>
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState("")
   const [newNumber, setNewNumber] = useState("")
   const [newSearchName, setNewSearchName] = useState("")
+  const [message, setMessage] = useState(["", true])
 
   const fetchHook = () => {
     personService.getAll().then(initialPersons => {
@@ -77,17 +88,40 @@ const App = () => {
     }
 
     let copy = false
+    let id = 0
 
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === personObject.name) {
         copy = true
+        id = i + 1
       }
     }
     if (copy) {
-      alert(`${newName} is already added to phonebook`)
+      //alert(`${newName} is already added to phonebook`)
+      if (
+        window.confirm(
+          `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        personService
+          .update(id, personObject)
+          .then(returnedPerson =>
+            setPersons(
+              persons.map(person =>
+                person.id !== id ? person : returnedPerson
+              )
+            )
+          )
+      } else {
+        console.log("no se realizo ningun reemplazo de numero")
+      }
     } else {
       personService.create(personObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
+        setMessage([`Added ${returnedPerson.name}`, true])
+        setTimeout(() => {
+          setMessage(["", true])
+        }, 5000)
       })
     }
     setNewName("")
@@ -116,6 +150,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={message} />
       <Filter
         newSearchName={newSearchName}
         handleSearchName={handleSearchName}
