@@ -29,25 +29,44 @@ const PersonForm = ({
   </form>
 )
 
-const Persons = ({ personsToShow }) => (
+const Persons = ({ personsToShow, setMessage }) => (
   <>
     {personsToShow.map(person => (
       <div key={person.name}>
         {person.name} {person.number}{" "}
-        <DeleteButton id={person.id} name={person.name} />
+        <DeleteButton
+          id={person.id}
+          name={person.name}
+          setMessage={setMessage}
+        />
       </div>
     ))}
   </>
 )
 
-const DeleteButton = ({ id, persons, setPersons, name }) => {
+const DeleteButton = ({ id, name, setMessage }) => {
   const handler = () => {
     if (window.confirm(`Delete ${name} ?`)) {
       personService
         .eliminate(id)
-        .then(returnedPerson =>
-          setPersons(persons.filter(person => person.id !== returnedPerson.id))
-        )
+        .then(response => {
+          setMessage([
+            `Information of ${name} has been removed correctly`,
+            true,
+          ])
+          setTimeout(() => {
+            setMessage(["", true])
+          }, 3000)
+        })
+        .catch(response => {
+          setMessage([
+            `Information of ${name} has already been removed from server`,
+            false,
+          ])
+          setTimeout(() => {
+            setMessage(["", true])
+          }, 3000)
+        })
     } else {
       console.log("no fue borrado nada")
     }
@@ -121,7 +140,7 @@ const App = () => {
         setMessage([`Added ${returnedPerson.name}`, true])
         setTimeout(() => {
           setMessage(["", true])
-        }, 5000)
+        }, 3000)
       })
     }
     setNewName("")
@@ -168,6 +187,7 @@ const App = () => {
         personsToShow={personsToShow}
         persons={persons}
         setPersons={setPersons}
+        setMessage={setMessage}
       />
     </div>
   )
