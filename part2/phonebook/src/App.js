@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 const Filter = ({ newSearchName, handleSearchName }) => (
   <>
     filter shown with
     <input value={newSearchName} onChange={handleSearchName} />
   </>
-);
+)
 
 const PersonForm = ({
   addPerson,
@@ -26,7 +26,7 @@ const PersonForm = ({
       <button type="submit">add</button>
     </div>
   </form>
-);
+)
 
 const Persons = ({ personsToShow }) => (
   <>
@@ -36,70 +36,70 @@ const Persons = ({ personsToShow }) => (
       </div>
     ))}
   </>
-);
+)
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
-  const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
-  const [newSearchName, setNewSearchName] = useState("");
+  const [persons, setPersons] = useState([])
+  const [newName, setNewName] = useState("")
+  const [newNumber, setNewNumber] = useState("")
+  const [newSearchName, setNewSearchName] = useState("")
 
   const fetchHook = () => {
     const eventHandler = response => {
-      setPersons(response.data);
-    };
-    axios.get("http://localhost:3001/persons").then(eventHandler);
-  };
+      setPersons(response.data)
+    }
+    axios.get("http://localhost:3001/persons").then(eventHandler)
+  }
 
-  useEffect(fetchHook, []);
+  useEffect(fetchHook, [])
 
   const addPerson = event => {
-    event.preventDefault();
+    event.preventDefault()
 
     const personObject = {
       name: newName,
       number: newNumber,
-    };
+    }
 
-    let copy = false;
+    let copy = false
 
     for (let i = 0; i < persons.length; i++) {
-      // this is for check if all the object is the same
-      // if (JSON.stringify(persons[i]) === JSON.stringify(personObject)) {
-      //   copy = true;
-      // }
-      // this is to check only if the name is the same
       if (persons[i].name === personObject.name) {
-        copy = true;
+        copy = true
       }
     }
     if (copy) {
-      alert(`${newName} is already added to phonebook`);
+      alert(`${newName} is already added to phonebook`)
     } else {
-      setPersons(persons.concat(personObject));
+      axios
+        .post("http://localhost:3001/persons/", personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+        })
+      //setPersons(persons.concat(personObject))
     }
-    setNewName("");
-    setNewNumber("");
-  };
+    setNewName("")
+    setNewNumber("")
+  }
 
   const handleNameChange = event => {
-    setNewName(event.target.value);
-  };
+    setNewName(event.target.value)
+  }
 
   const handleNumberChange = event => {
-    setNewNumber(event.target.value);
-  };
+    setNewNumber(event.target.value)
+  }
 
   const handleSearchName = event => {
-    setNewSearchName(event.target.value);
-  };
+    setNewSearchName(event.target.value)
+  }
 
   const personsToShow =
     !newSearchName || newSearchName === ""
       ? persons
       : persons.filter(person =>
           person.name.toLowerCase().includes(newSearchName.toLowerCase())
-        );
+        )
 
   return (
     <div>
@@ -119,7 +119,7 @@ const App = () => {
       <h1>Numbers</h1>
       <Persons personsToShow={personsToShow} />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
