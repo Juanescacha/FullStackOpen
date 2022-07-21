@@ -97,7 +97,6 @@ const App = () => {
       }
     }
     if (copy) {
-      //alert(`${newName} is already added to phonebook`)
       if (
         window.confirm(
           `${personObject.name} is already added to phonebook, replace the old number with a new one?`
@@ -116,6 +115,7 @@ const App = () => {
         console.log("no se realizo ningun reemplazo de numero")
       }
     } else {
+      // Exercise 2.19
       personService.create(personObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setMessage([`Added ${returnedPerson.name}`, true])
