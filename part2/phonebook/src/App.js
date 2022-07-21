@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
+import personService from "./services/persons"
 
 const Filter = ({ newSearchName, handleSearchName }) => (
   <>
@@ -45,10 +45,9 @@ const App = () => {
   const [newSearchName, setNewSearchName] = useState("")
 
   const fetchHook = () => {
-    const eventHandler = response => {
-      setPersons(response.data)
-    }
-    axios.get("http://localhost:3001/persons").then(eventHandler)
+    personService.getAll().then(initialPersons => {
+      setPersons(initialPersons)
+    })
   }
 
   useEffect(fetchHook, [])
@@ -71,12 +70,9 @@ const App = () => {
     if (copy) {
       alert(`${newName} is already added to phonebook`)
     } else {
-      axios
-        .post("http://localhost:3001/persons/", personObject)
-        .then(response => {
-          setPersons(persons.concat(response.data))
-        })
-      //setPersons(persons.concat(personObject))
+      personService.create(personObject).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+      })
     }
     setNewName("")
     setNewNumber("")
