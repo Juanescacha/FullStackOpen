@@ -32,11 +32,27 @@ const Persons = ({ personsToShow }) => (
   <>
     {personsToShow.map(person => (
       <div key={person.name}>
-        {person.name} {person.number}
+        {person.name} {person.number}{" "}
+        <DeleteButton id={person.id} name={person.name} />
       </div>
     ))}
   </>
 )
+
+const DeleteButton = ({ id, persons, setPersons, name }) => {
+  const handler = () => {
+    if (window.confirm(`Delete ${name} ?`)) {
+      personService
+        .eliminate(id)
+        .then(returnedPerson =>
+          setPersons(persons.filter(person => person.id !== returnedPerson.id))
+        )
+    } else {
+      console.log("no fue borrado nada")
+    }
+  }
+  return <button onClick={handler}>delete</button>
+}
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -50,7 +66,7 @@ const App = () => {
     })
   }
 
-  useEffect(fetchHook, [])
+  useEffect(fetchHook)
 
   const addPerson = event => {
     event.preventDefault()
@@ -113,7 +129,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h1>Numbers</h1>
-      <Persons personsToShow={personsToShow} />
+      <Persons
+        personsToShow={personsToShow}
+        persons={persons}
+        setPersons={setPersons}
+      />
     </div>
   )
 }
