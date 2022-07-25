@@ -1,6 +1,7 @@
 const { request, response } = require("express")
 const express = require("express")
 const app = express()
+const morgan = require("morgan")
 
 let persons = [
   {
@@ -26,6 +27,7 @@ let persons = [
 ]
 
 app.use(express.json())
+app.use(morgan("tiny"))
 
 app.get("/info", (request, response) => {
   response.send(
