@@ -82,7 +82,6 @@ app.post("/api/persons", (request, response) => {
     id: Math.floor(Math.random() * 1000),
     name: body.name,
     number: body.number,
-    tipo: persons.filter(person => person.name === body.name),
   }
 
   persons = persons.concat(person)
