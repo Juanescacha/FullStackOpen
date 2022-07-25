@@ -96,7 +96,7 @@ const App = () => {
     })
   }
 
-  useEffect(fetchHook)
+  useEffect(fetchHook, [message])
 
   const addPerson = event => {
     event.preventDefault()
