@@ -25,17 +25,17 @@ let persons = [
   },
 ]
 
-const number = persons.length
+app.use(express.json())
 
 app.get("/info", (request, response) => {
-  response.send(`phonebook has info for ${number} people <br> ${new Date()}`)
+  response.send(
+    `phonebook has info for ${persons.length} people <br> ${new Date()}`
+  )
 })
 
 app.get("/api/persons", (request, response) => {
   response.json(persons)
 })
-
-// Exercise 3.3 was already made in last commits
 
 app.get("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id)
@@ -53,6 +53,32 @@ app.delete("/api/persons/:id", (request, response) => {
   persons = persons.filter(person => person.id !== id)
 
   response.status(204).end()
+})
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name missing",
+    })
+  }
+
+  if (persons.filter(person => person.name === body.name).length > 0) {
+    return response.status(400).json({
+      error: "name already exists",
+    })
+  }
+
+  const person = {
+    id: Math.floor(Math.random() * 1000),
+    name: body.name,
+    number: body.number,
+    tipo: persons.filter(person => person.name === body.name),
+  }
+
+  persons = persons.concat(person)
+  response.json(person)
 })
 
 const PORT = 3001
