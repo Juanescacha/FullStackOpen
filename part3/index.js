@@ -66,7 +66,13 @@ app.post("/api/persons", (request, response) => {
 
   if (persons.filter(person => person.name === body.name).length > 0) {
     return response.status(400).json({
-      error: "name already exists",
+      error: "name must be unique",
+    })
+  }
+
+  if (!body.number) {
+    return response.status(400).json({
+      error: "number missing",
     })
   }
 
