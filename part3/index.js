@@ -47,6 +47,37 @@ app.delete("/api/persons/:id", (request, response) => {
 })
 
 app.post("/api/persons", (request, response) => {
+  
+  const body = request.body
+
+  if (body.name === undefined) {
+    return response.status(400).json({
+      error: "name missing",
+    })
+  }
+
+  if (body.number === undefined) {
+    return response.status(400).json({
+      error: "number missing",
+    })
+  }
+
+  /* Not yet implemented making sure name dont already exits
+  if (persons.filter(person => person.name === body.name).length > 0) {
+    return response.status(400).json({
+      error: "name must be unique",
+    })
+  } */
+
+  const person = new Person({
+    id: Math.floor(Math.random() * 1000),
+    name: body.name,
+    number: body.number,
+  })
+
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 const PORT = process.env.PORT
