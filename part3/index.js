@@ -41,13 +41,12 @@ app.get("/api/persons/:id", (request, response) => {
 })
 
 app.delete("/api/persons/:id", (request, response) => {
-  Person.deleteOne({id = request.params.id}).then(res => {
+  Person.deleteOne({ id: request.params.id }).then(res => {
     response.status(204).end()
   })
 })
 
 app.post("/api/persons", (request, response) => {
-  
   const body = request.body
 
   if (body.name === undefined) {
