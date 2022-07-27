@@ -106,35 +106,33 @@ const App = () => {
       number: newNumber,
     }
 
-    let copy = false
     let id = 0
 
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === personObject.name) {
-        copy = true
-        id = i + 1
-      }
-    }
-    if (copy) {
-      if (
-        window.confirm(
-          `${personObject.name} is already added to phonebook, replace the old number with a new one?`
-        )
-      ) {
-        personService
-          .update(id, personObject)
-          .then(returnedPerson =>
-            setPersons(
-              persons.map(person =>
-                person.id !== id ? person : returnedPerson
+        id = persons[i].id
+        if (
+          window.confirm(
+            `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+          )
+        ) {
+          personService
+            .update(id, personObject)
+            .then(returnedPerson =>
+              setPersons(
+                persons.map(person =>
+                  person.id !== id ? person : returnedPerson
+                )
               )
             )
-          )
-      } else {
-        console.log("no se realizo ningun reemplazo de numero")
+        } else {
+          console.log("no se realizo ningun reemplazo de numero")
+        }
+        break
       }
-    } else {
-      // Exercise 2.19
+    }
+
+    if (id === 0) {
       personService.create(personObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setMessage([`Added ${returnedPerson.name}`, true])
