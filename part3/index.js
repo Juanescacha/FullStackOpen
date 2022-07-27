@@ -26,9 +26,17 @@ app.use(
 // GET info
 
 app.get("/info", (request, response) => {
-  response.send(
+  /* response.send(
     `phonebook has info for ${persons.length} people <br> ${new Date()}`
-  )
+  ) */
+
+  Person.find({})
+    .then(persons => {
+      response.send(
+        `phonebook has info for ${persons.length} people <br> ${new Date()}`
+      )
+    })
+    .catch(error => next(error))
 })
 
 // GET persons
