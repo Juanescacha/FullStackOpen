@@ -125,6 +125,9 @@ const App = () => {
                 )
               )
             )
+            .catch(error => {
+              setMessage([error.response.data.error, false])
+            })
         } else {
           console.log("no se realizo ningun reemplazo de numero")
         }
@@ -133,13 +136,18 @@ const App = () => {
     }
 
     if (id === 0) {
-      personService.create(personObject).then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setMessage([`Added ${returnedPerson.name}`, true])
-        setTimeout(() => {
-          setMessage(["", true])
-        }, 3000)
-      })
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setMessage([`Added ${returnedPerson.name}`, true])
+          setTimeout(() => {
+            setMessage(["", true])
+          }, 3000)
+        })
+        .catch(error => {
+          setMessage([error.response.data.error, false])
+        })
     }
     setNewName("")
     setNewNumber("")
