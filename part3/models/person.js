@@ -19,7 +19,7 @@ const validator = num => {
 
 const numValidatorError = [
   validator,
-  "Error, please enter the phone number with the format XXX-XXXXX",
+  "Error, please enter the phone number with the format xxx-xxxx",
 ]
 
 const personSchema = new mongoose.Schema({
