@@ -35,7 +35,7 @@ if (process.argv.length === 3) {
 
   person.save().then(result => {
     console.log(
-      `added ${process.argv[3]} number ${process.argv[4]} to phonebook`
+      `added ${process.argv[3]} number ${process.argv[4]} to phonebook, status: ${result}`
     )
     mongoose.connection.close()
   })

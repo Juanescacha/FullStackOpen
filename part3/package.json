@@ -6,11 +6,13 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "author": "Juan Esteban Camargo",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.20.0",
     "nodemon": "^2.0.19"
   },
   "dependencies": {

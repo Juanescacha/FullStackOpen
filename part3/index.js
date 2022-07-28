@@ -1,5 +1,4 @@
 require("dotenv").config()
-const { request, response } = require("express")
 const express = require("express")
 const app = express()
 const morgan = require("morgan")
@@ -25,7 +24,7 @@ app.use(
 
 // GET info
 
-app.get("/info", (request, response) => {
+app.get("/info", (request, response, next) => {
   Person.find({})
     .then(persons => {
       response.send(
@@ -64,6 +63,7 @@ app.get("/api/persons/:id", (request, response, next) => {
 app.delete("/api/persons/:id", (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
     .then(result => {
+      response.json(result)
       response.status(204).end()
     })
     .catch(error => next(error))
