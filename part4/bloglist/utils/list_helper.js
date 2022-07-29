@@ -1,5 +1,9 @@
+const _ = require("lodash")
+
 const dummy = blogs => {
-  return 1
+  if (blogs) {
+    return 1
+  }
 }
 
 const totalLikes = blogs => {
@@ -14,8 +18,17 @@ const favoriteBlog = blogs => {
   return blogs.reduce(mayor, { likes: 0 })
 }
 
+const mostBlogs = blogs => {
+  const x = a => {
+    return a
+  }
+
+  return 1
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
+  mostBlogs,
 }
