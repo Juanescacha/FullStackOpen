@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.s",
     "lint": "eslint .",
-    "test": "jest --verbose"
+    "test": "jest --verbose --runInBand"
   },
   "author": "Juan Esteban Camargo",
   "license": "MIT",
