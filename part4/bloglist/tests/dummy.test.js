@@ -106,11 +106,47 @@ describe("favorite blog", () => {
   })
 })
 
-describe("most blogs", () => {
+describe("most blogs author", () => {
+  test("when the list is empty", () => {
+    expect(listHelper.mostBlogs(listEmpty)).toEqual({
+      author: "",
+      blogs: 0,
+    })
+  })
+
+  test("when the list is one element only", () => {
+    expect(listHelper.mostBlogs(listWithOneBlog)).toEqual({
+      author: "Edsger W. Dijkstra",
+      blogs: 1,
+    })
+  })
+
   test("when the list is large its calculated correctly", () => {
     expect(listHelper.mostBlogs(blogs)).toEqual({
       author: "Robert C. Martin",
       blogs: 3,
+    })
+  })
+})
+
+describe("most likes author", () => {
+  test("when the list is empty", () => {
+    expect(listHelper.mostLikes(listEmpty)).toEqual({
+      author: "",
+      likes: 0,
+    })
+  })
+
+  test("when the list is one element only", () => {
+    expect(listHelper.mostLikes(listWithOneBlog)).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 5,
+    })
+  })
+  test("When the list its large its calculated correctly", () => {
+    expect(listHelper.mostLikes(blogs)).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 17,
     })
   })
 })
