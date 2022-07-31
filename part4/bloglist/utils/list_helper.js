@@ -19,11 +19,12 @@ const favoriteBlog = blogs => {
 }
 
 const mostBlogs = blogs => {
-  const x = a => {
-    return a
-  }
+  const groupedBlogs = _.groupBy(blogs, "author")
+  const blogsAuthor = _.mapValues(groupedBlogs, "length")
+  const toArray = Object.entries(blogsAuthor)
+  const mayorPair = toArray.reduce((a, b) => (a[1] > b[1] ? a : b))
 
-  return 1
+  return { author: mayorPair[0], blogs: mayorPair[1] }
 }
 
 module.exports = {
