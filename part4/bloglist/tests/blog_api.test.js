@@ -88,6 +88,19 @@ describe("DELETE request", () => {
   })
 })
 
+describe("PUT requests", () => {
+  test("testing updating an already existing blog", async () => {
+    const id = "5a422a851b54a676234d17f7"
+    const blog = {
+      title: "Titulo de prueba",
+      author: "Juan Lopez",
+      url: "http://google.com",
+      likes: 100,
+    }
+    await api.put(`/api/blogs/${id}`).send(blog).expect(200)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
