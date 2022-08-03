@@ -42,6 +42,23 @@ describe("POST requests", () => {
 
     expect(blogs).toHaveLength(helper.initialBlogs.length + 1)
   }, 100000)
+
+  test("verify if likes property is missing for making it default 0", async () => {
+    const blog = {
+      title: "TDD harms architecture",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
+    }
+
+    const response = await api
+      .post("/api/blogs")
+      .send(blog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/)
+
+    expect(response.body.likes).toBeDefined()
+    expect(response.body.likes).toBe(0)
+  })
 })
 
 describe("ID property is named id", () => {
