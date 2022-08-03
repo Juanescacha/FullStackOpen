@@ -59,6 +59,14 @@ describe("POST requests", () => {
     expect(response.body.likes).toBeDefined()
     expect(response.body.likes).toBe(0)
   })
+
+  test("missing title and url from sent object to POST request, backends responds with 400 Bad Request", async () => {
+    const blog = {
+      author: "Robert Downey Jr",
+    }
+
+    await api.post("/api/blogs").send(blog).expect(400)
+  })
 })
 
 describe("ID property is named id", () => {
