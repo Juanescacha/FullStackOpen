@@ -101,6 +101,18 @@ describe("PUT requests", () => {
   })
 })
 
+describe("POST request for creating new USERS", () => {
+  test("creating new user with username that already exists", async () => {
+    const user = {
+      username: "robcarter",
+      name: "Maria Lopez",
+      password: "alvaro2009",
+    }
+
+    await api.post("/api/users").send(user).expect(400)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
