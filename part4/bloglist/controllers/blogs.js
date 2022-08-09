@@ -1,8 +1,5 @@
 const blogsRouter = require("express").Router()
 const Blog = require("../models/blog")
-const User = require("../models/user")
-const jwt = require("jsonwebtoken")
-const blog = require("../models/blog")
 
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 })
@@ -12,19 +9,11 @@ blogsRouter.get("/", async (request, response) => {
 blogsRouter.post("/", async (request, response) => {
   const body = request.body
 
-  const token = request.token
-
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-
-  if (!decodedToken.id) {
-    return response.status(404).json({ error: "token missing or invalid" })
-  }
-
   if (!body.title || !body.url) {
     return response.status(400).json({ error: "Title or URL Missing" })
   }
 
-  const user = await User.findById(decodedToken.id)
+  const user = request.user
 
   const blog = new Blog({
     title: body.title,
@@ -42,18 +31,22 @@ blogsRouter.post("/", async (request, response) => {
 })
 
 blogsRouter.delete("/:id", async (request, response) => {
-  const token = request.token
+  const id = request.params.id
+  const user = request.user
+  const blog = await Blog.findById(id)
 
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-
-  if (!decodedToken.id) {
-    return response.status(404).json({ error: "token missing or invalid" })
+  if (!blog) {
+    return response
+      .status(400)
+      .json({ error: `Blog by ID ${id} does not exist` })
   }
 
-  const id = request.params.id
-  const blog = await Blog.findById(id)
-  if (blog.user.toString() === decodedToken.id) {
+  if (blog.user.toString() === user._id.toString()) {
     await Blog.findByIdAndDelete(id)
+    user.blogs = user.blogs.filter(
+      blogID => blogID.toString() !== blog._id.toString()
+    )
+    await user.save()
     response.status(204).end()
   } else {
     return response
