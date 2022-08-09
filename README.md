@@ -1,6 +1,6 @@
-# COURSE Full Stack Open 2022
-
 ![ceritficate-till-the-moment-of-the-current-module-on-the-course](https://raw.githubusercontent.com/Juanescacha/FullStackOpen-2022/main/certificates/certificate-fullstack.png)
+
+# COURSE Full Stack Open 2022
 
 Exercises for the course: Full stack open 2022
 
