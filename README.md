@@ -1,5 +1,7 @@
 # COURSE Full Stack Open 2022
 
+![ceritficate-till-the-moment-of-the-current-module-on-the-course](http://url/to/img.png)
+
 Exercises for the course: Full stack open 2022
 
 using Javascript, React, Node, Express, REST API, Typescript and more technologies
