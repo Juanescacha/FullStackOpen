@@ -1,9 +1,6 @@
 const usersRouter = require("express").Router()
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
-//const jwt = require("jsonwebtoken")
-
-// GET requests
 
 usersRouter.get("/", async (request, response) => {
   const users = await User.find({}).populate("blogs", {
@@ -14,8 +11,6 @@ usersRouter.get("/", async (request, response) => {
   })
   response.json(users)
 })
-
-// POST requests
 
 usersRouter.post("/", async (request, response) => {
   const { username, name, password } = request.body
