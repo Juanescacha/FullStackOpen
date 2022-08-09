@@ -8,6 +8,11 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [updateBlogs, setUpdateBlogs] = useState(false)
+
+  const [title, setTitle] = useState("")
+  const [author, setAuthor] = useState("")
+  const [url, setUrl] = useState("")
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -29,9 +34,24 @@ const App = () => {
     setUser(null)
   }
 
+  const handleCreate = async event => {
+    event.preventDefault()
+    const blog = { title: title, author: author, url: url }
+
+    try {
+      await blogService.create(blog)
+      setAuthor("")
+      setTitle("")
+      setUrl("")
+      setUpdateBlogs(!updateBlogs)
+    } catch (error) {
+      console.error("please enther valid data and fill all fields", error)
+    }
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs => setBlogs(blogs))
-  }, [])
+  }, [updateBlogs])
 
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem("loggedUser"))
@@ -79,6 +99,35 @@ const App = () => {
           logout
         </button>
       </div>
+      <br />
+      <h2>create new</h2>
+      <form onSubmit={handleCreate}>
+        title:
+        <input
+          type="text"
+          name="title"
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+        />
+        <br />
+        author:
+        <input
+          type="text"
+          name="author"
+          value={author}
+          onChange={({ target }) => setAuthor(target.value)}
+        />
+        <br />
+        url:
+        <input
+          type="URL"
+          name="url"
+          value={url}
+          onChange={({ target }) => setUrl(target.value)}
+        />
+        <br />
+        <button type="submit">create</button>
+      </form>
       <br />
       {blogs.map(blog => (
         <Blog key={blog.id} blog={blog} />
