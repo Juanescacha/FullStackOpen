@@ -2,6 +2,16 @@ import { useState, useEffect } from "react"
 import Blog from "./components/Blog"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
+import "./app.css"
+
+const Notification = ({ message }) => {
+  if (message[0] === "") {
+    return null
+  }
+
+  const type = message[1] ? "success" : "error"
+  return <div className={type}>{message[0]}</div>
+}
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -9,6 +19,7 @@ const App = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [updateBlogs, setUpdateBlogs] = useState(false)
+  const [message, setMessage] = useState(["", true])
 
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
@@ -24,14 +35,26 @@ const App = () => {
       setUsername("")
       setPassword("")
       blogService.setToken(user.token)
+      setMessage(["Successfully logged in", true])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
     } catch (exception) {
       console.error("Wrong credentials", exception)
+      setMessage(["Wrong Credentials", false])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
     }
   }
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedUser")
     setUser(null)
+    setMessage(["Successfully logged out", true])
+    setTimeout(() => {
+      setMessage(["", true])
+    }, 3000)
   }
 
   const handleCreate = async event => {
@@ -44,7 +67,15 @@ const App = () => {
       setTitle("")
       setUrl("")
       setUpdateBlogs(!updateBlogs)
+      setMessage(["Successfully created blog", true])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
     } catch (error) {
+      setMessage(["blog not created", false])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
       console.error("please enther valid data and fill all fields", error)
     }
   }
@@ -65,6 +96,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={message} />
         <form onSubmit={handleLogin}>
           <div>
             username{" "}
@@ -93,6 +125,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={message} />
       <div>
         {user.name} logged in{" "}
         <button type="button" onClick={handleLogout}>
