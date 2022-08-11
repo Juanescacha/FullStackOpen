@@ -61,12 +61,6 @@ blogsRouter.put("/:id", async (request, response) => {
   const blog = await Blog.findById(id)
   const user = blog.user
 
-  // const result = await Blog.findByIdAndUpdate(
-  //   id,
-  //   { user, title, author, url, likes },
-  //   { new: true, runValidators: true, context: "query" }
-  // )
-
   const result = await Blog.findOneAndReplace(
     { _id: id },
     { user, likes, url, author, title }

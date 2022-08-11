@@ -111,12 +111,21 @@ const App = () => {
     }
   }
 
-  const updateLike = () => {
+  const updateLike = async (blog, id) => {
+    await blogService.addLike(blog, id)
+    setUpdateBlogs(!updateBlogs)
+  }
+
+  const removeBlog = async id => {
+    await blogService.remove(id)
     setUpdateBlogs(!updateBlogs)
   }
 
   useEffect(() => {
-    blogService.getAll().then(blogs => setBlogs(blogs))
+    blogService.getAll().then(blogs => {
+      blogs.sort((a, b) => b.likes - a.likes)
+      setBlogs(blogs)
+    })
   }, [updateBlogs])
 
   useEffect(() => {
@@ -175,7 +184,12 @@ const App = () => {
       </Toggable>
       <br />
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} updateLike={updateLike} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          updateLike={updateLike}
+          removeBlog={removeBlog}
+        />
       ))}
     </div>
   )
