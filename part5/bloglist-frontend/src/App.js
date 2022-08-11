@@ -111,6 +111,10 @@ const App = () => {
     }
   }
 
+  const updateLike = () => {
+    setUpdateBlogs(!updateBlogs)
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs => setBlogs(blogs))
   }, [updateBlogs])
@@ -161,7 +165,7 @@ const App = () => {
       <h1>Blogs</h1>
       <Notification message={message} />
       <div>
-        {user.name} logged in{" "}
+        {user.name} - logged in{" "}
         <button type="button" onClick={handleLogout}>
           logout
         </button>
@@ -171,7 +175,7 @@ const App = () => {
       </Toggable>
       <br />
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateLike={updateLike} />
       ))}
     </div>
   )

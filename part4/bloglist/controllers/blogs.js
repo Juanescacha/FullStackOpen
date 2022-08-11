@@ -57,14 +57,29 @@ blogsRouter.delete("/:id", async (request, response) => {
 
 blogsRouter.put("/:id", async (request, response) => {
   const { title, author, url, likes } = request.body
+  const id = request.params.id
+  const blog = await Blog.findById(id)
+  const user = blog.user
 
-  const result = await Blog.findByIdAndUpdate(
-    request.params.id,
-    { title, author, url, likes },
-    { new: true, runValidators: true, context: "query" }
+  // const result = await Blog.findByIdAndUpdate(
+  //   id,
+  //   { user, title, author, url, likes },
+  //   { new: true, runValidators: true, context: "query" }
+  // )
+
+  const result = await Blog.findOneAndReplace(
+    { _id: id },
+    { user, likes, url, author, title }
   )
 
-  response.json(result)
+  const blogModificado = await Blog.findById(id)
+  response.json(blogModificado)
+
+  if (result.n) {
+    return response
+      .status(400)
+      .json({ error: `Blog by ID ${id} does not exist` })
+  }
 })
 
 module.exports = blogsRouter
