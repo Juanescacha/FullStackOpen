@@ -112,13 +112,40 @@ const App = () => {
   }
 
   const updateLike = async (blog, id) => {
-    await blogService.addLike(blog, id)
-    setUpdateBlogs(!updateBlogs)
+    try {
+      await blogService.addLike(blog, id)
+      setUpdateBlogs(!updateBlogs)
+      setMessage(["Successfully liked blog", true])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
+    } catch (error) {
+      setMessage(["like not added", false])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
+      console.error("error liking a blog", error)
+    }
   }
 
   const removeBlog = async id => {
-    await blogService.remove(id)
-    setUpdateBlogs(!updateBlogs)
+    try {
+      await blogService.remove(id)
+      setUpdateBlogs(!updateBlogs)
+      setMessage(["Blog successfully removed", true])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
+    } catch (error) {
+      console.error("error deleting a blog", error)
+      setMessage([
+        "Error Removing Blog, you cannot remove a Blog that its not yours",
+        false,
+      ])
+      setTimeout(() => {
+        setMessage(["", true])
+      }, 3000)
+    }
   }
 
   useEffect(() => {
@@ -189,6 +216,7 @@ const App = () => {
           blog={blog}
           updateLike={updateLike}
           removeBlog={removeBlog}
+          user={user}
         />
       ))}
     </div>

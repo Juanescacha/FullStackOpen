@@ -41,6 +41,12 @@ blogsRouter.delete("/:id", async (request, response) => {
       .json({ error: `Blog by ID ${id} does not exist` })
   }
 
+  if (!blog.user) {
+    return response
+      .status(404)
+      .json({ error: `Blog by ID ${id} does not have owner user` })
+  }
+
   if (blog.user.toString() === user._id.toString()) {
     await Blog.findByIdAndDelete(id)
     user.blogs = user.blogs.filter(
