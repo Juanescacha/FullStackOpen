@@ -53,7 +53,7 @@ const Toggable = forwardRef((props, ref) => {
   )
 })
 
-Toggable.PropTypes = {
+Toggable.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
 }
 
