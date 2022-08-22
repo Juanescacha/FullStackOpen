@@ -12,6 +12,8 @@ import blogService from "./services/blogs"
 import loginService from "./services/login"
 import "./app.css"
 
+import PropTypes from "prop-types"
+
 const Notification = ({ message }) => {
   if (message[0] === "") {
     return null
@@ -50,6 +52,10 @@ const Toggable = forwardRef((props, ref) => {
     </div>
   )
 })
+
+Toggable.PropTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+}
 
 const App = () => {
   const blogFormRef = useRef()
