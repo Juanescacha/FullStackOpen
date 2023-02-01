@@ -19,9 +19,12 @@ describe("<Blog />", () => {
 	}
 
 	let container
+	let onClick = jest.fn()
 
 	beforeEach(() => {
-		container = render(<Blog blog={blog} user={user} />).container
+		container = render(
+			<Blog blog={blog} updateLike={onClick} user={user} />
+		).container
 	})
 
 	test("al inicio el componente hijo no se muestra", () => {
@@ -36,5 +39,13 @@ describe("<Blog />", () => {
 
 		const div = container.querySelector(".hidden")
 		expect(div).not.toHaveStyle("display: none")
+	})
+
+	test("despues de dar dos clicksboton de like, el controlador del evento se llama 2 veces", async () => {
+		const usuario = userEvent.setup()
+		const botonLike = screen.getByText("like")
+		await usuario.click(botonLike)
+		await usuario.click(botonLike)
+		expect(onClick).toHaveBeenCalledTimes(2)
 	})
 })
