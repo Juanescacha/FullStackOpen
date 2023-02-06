@@ -5,10 +5,17 @@ describe("blog app", function () {
 		const user = {
 			username: "AlmamarcelaGozo",
 			name: "Maria Marcela",
-			password: "alvaro2010",
+			password: "julian2010",
+		}
+
+		const user2 = {
+			username: "AlejandraGozo",
+			name: "Alejandro",
+			password: "julian2010",
 		}
 
 		cy.request("POST", "http://localhost:3003/api/users", user)
+		cy.request("POST", "http://localhost:3003/api/users", user2)
 
 		cy.visit("http://localhost:3000")
 	})
@@ -21,7 +28,7 @@ describe("blog app", function () {
 		it("succeeds with correct credentials", function () {
 			cy.get("#login").click()
 			cy.get("#username").type("AlmamarcelaGozo")
-			cy.get("#password").type("alvaro2010")
+			cy.get("#password").type("julian2010")
 			cy.get("#login-button").click()
 			cy.get(".success").contains("Successfully logged in")
 		})
@@ -43,7 +50,7 @@ describe("blog app", function () {
 
 	describe("when logged in", () => {
 		beforeEach(() => {
-			cy.login({ username: "AlmamarcelaGozo", password: "alvaro2010" })
+			cy.login({ username: "AlmamarcelaGozo", password: "julian2010" })
 		})
 
 		it("A blog can be created", () => {
@@ -54,6 +61,19 @@ describe("blog app", function () {
 			cy.get("#create-button").click()
 			cy.get(".success").contains("Successfully created blog")
 			cy.contains("A new blog created by cypress")
+		})
+
+		it("A blog can be liked", () => {
+			cy.createBlog({
+				title: "A second blog created by cypress",
+				author: "Cypress",
+				url: "https://www.cypress.com",
+			})
+
+			cy.contains("A second blog created by cypress")
+				.contains("view")
+				.click()
+			cy.contains("like").click()
 		})
 	})
 })
