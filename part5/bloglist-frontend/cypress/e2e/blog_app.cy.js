@@ -106,5 +106,27 @@ describe("blog app", function () {
 
 			cy.contains("remove").should("not.exist")
 		})
+
+		it.only("Blogs are ordered by likes", () => {
+			cy.createBlog({
+				title: "The title with most likes",
+				author: "Cypress",
+				url: "https://www.cypress.com",
+			})
+
+			cy.createBlog({
+				title: "The title with the second most likes",
+				author: "Cypress",
+				url: "https://www.cypress.com",
+			})
+
+			cy.contains("The title with most likes").contains("view").click()
+			cy.get("button").contains("like").click()
+
+			cy.get(".blog").eq(0).should("contain", "The title with most likes")
+			cy.get(".blog")
+				.eq(1)
+				.should("contain", "The title with the second most likes")
+		})
 	})
 })
