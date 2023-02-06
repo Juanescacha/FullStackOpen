@@ -75,5 +75,18 @@ describe("blog app", function () {
 				.click()
 			cy.contains("like").click()
 		})
+
+		it("A blog can be deleted", () => {
+			cy.createBlog({
+				title: "A third blog created by cypress",
+				author: "Cypress",
+				url: "https://www.cypress.com",
+			})
+
+			cy.contains("A third blog created by cypress")
+				.contains("view")
+				.click()
+			cy.contains("remove").click()
+		})
 	})
 })
