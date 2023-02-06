@@ -7,7 +7,8 @@
 		"start": "cross-env NODE_ENV=production node index.js",
 		"dev": "cross-env NODE_ENV=development nodemon",
 		"lint": "eslint .",
-		"test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit"
+		"test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
+		"start:test": "cross-env NODE_ENV=test node index.js"
 	},
 	"author": "Juan Esteban Camargo",
 	"license": "MIT",
