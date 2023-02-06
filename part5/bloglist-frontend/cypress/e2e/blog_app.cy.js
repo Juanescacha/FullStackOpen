@@ -88,5 +88,23 @@ describe("blog app", function () {
 				.click()
 			cy.contains("remove").click()
 		})
+
+		it("A blog cant be deleted only but his owner", () => {
+			cy.createBlog({
+				title: "A fourth blog created by cypress",
+				author: "Cypress",
+				url: "https://www.cypress.com",
+			})
+
+			cy.contains("logout").click()
+
+			cy.login({ username: "AlejandraGozo", password: "julian2010" })
+
+			cy.contains("A fourth blog created by cypress")
+				.contains("view")
+				.click()
+
+			cy.contains("remove").should("not.exist")
+		})
 	})
 })
