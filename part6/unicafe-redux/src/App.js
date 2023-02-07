@@ -57,12 +57,19 @@ const App = () => {
 		setBad(bad + 1)
 	}
 
+	const handleReset = () => {
+		setGood(0)
+		setNeutral(0)
+		setBad(0)
+	}
+
 	return (
 		<div>
 			<h1>give feedback</h1>
 			<Button text="good" handleClick={handleGood} />
 			<Button text="neutral" handleClick={handleNeutral} />
 			<Button text="bad" handleClick={handleBad} />
+			<Button text="reset" handleClick={handleReset} />
 
 			<h1>statistics</h1>
 			<Statistics good={good} neutral={neutral} bad={bad} />
