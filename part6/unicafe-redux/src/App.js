@@ -1,4 +1,6 @@
-import { useState } from "react"
+import { store } from "./store"
+
+console.log(store.getState())
 
 const Button = ({ text, handleClick }) => {
 	return <button onClick={handleClick}>{text}</button>
@@ -40,27 +42,20 @@ const StatisticLine = ({ text, value }) => {
 }
 
 const App = () => {
-	// save clicks of each button to its own state
-	const [good, setGood] = useState(0)
-	const [neutral, setNeutral] = useState(0)
-	const [bad, setBad] = useState(0)
-
 	const handleGood = () => {
-		setGood(good + 1)
+		store.dispatch({ type: "GOOD" })
 	}
 
 	const handleNeutral = () => {
-		setNeutral(neutral + 1)
+		store.dispatch({ type: "OK" })
 	}
 
 	const handleBad = () => {
-		setBad(bad + 1)
+		store.dispatch({ type: "BAD" })
 	}
 
 	const handleReset = () => {
-		setGood(0)
-		setNeutral(0)
-		setBad(0)
+		store.dispatch({ type: "ZERO" })
 	}
 
 	return (
@@ -72,7 +67,11 @@ const App = () => {
 			<Button text="reset" handleClick={handleReset} />
 
 			<h1>statistics</h1>
-			<Statistics good={good} neutral={neutral} bad={bad} />
+			<Statistics
+				good={store.getState().good}
+				neutral={store.getState().ok}
+				bad={store.getState().bad}
+			/>
 		</div>
 	)
 }
