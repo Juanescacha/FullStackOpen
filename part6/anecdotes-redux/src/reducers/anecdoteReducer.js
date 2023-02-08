@@ -1,15 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = anecdote => {
-	return {
-		content: anecdote,
-		id: getId(),
-		votes: 0,
-	}
-}
-
 const initialState = []
 
 const anecdoteSlice = createSlice({
@@ -22,8 +12,7 @@ const anecdoteSlice = createSlice({
 			state[anecdoteIndex].votes += 1
 		},
 		addAnecdote: (state, action) => {
-			const newAnecdote = asObject(action.payload)
-			state.push(newAnecdote)
+			state.push(action.payload)
 		},
 		appendAnecdotes: (state, action) => {
 			state.push(action.payload)
