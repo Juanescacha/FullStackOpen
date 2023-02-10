@@ -15,14 +15,20 @@ const App = () => {
 	})
 
 	const handleVote = anecdote => {
-		anecdoteVoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
-		notificationDispatch({
-			type: "SHOW",
-			data: `you voted: '${anecdote.content}'`,
-		})
-		setTimeout(() => {
-			notificationDispatch({ type: "HIDE" })
-		}, 5000)
+		anecdoteVoteMutation.mutate(
+			{ ...anecdote, votes: anecdote.votes + 1 },
+			{
+				onSuccess: () => {
+					notificationDispatch({
+						type: "SHOW",
+						data: `you voted: '${anecdote.content}'`,
+					})
+					setTimeout(() => {
+						notificationDispatch({ type: "HIDE" })
+					}, 5000)
+				},
+			}
+		)
 	}
 
 	const { isLoading, isError, data } = useQuery("anecdotes", getAnecdotes, {

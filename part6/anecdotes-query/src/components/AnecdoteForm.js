@@ -16,14 +16,29 @@ const AnecdoteForm = () => {
 		event.preventDefault()
 		const content = event.target.anecdote.value
 		event.target.anecdote.value = ""
-		newAnecdoteMutation.mutate({ content, votes: 0 })
-		notificationDispatch({
-			type: "SHOW",
-			data: `you created: '${content}'`,
-		})
-		setTimeout(() => {
-			notificationDispatch({ type: "HIDE" })
-		}, 5000)
+		newAnecdoteMutation.mutate(
+			{ content, votes: 0 },
+			{
+				onSuccess: () => {
+					notificationDispatch({
+						type: "SHOW",
+						data: `you created: '${content}'`,
+					})
+					setTimeout(() => {
+						notificationDispatch({ type: "HIDE" })
+					}, 5000)
+				},
+				onError: () => {
+					notificationDispatch({
+						type: "SHOW",
+						data: `an error occurred while creating '${content}', use at least 5 characters for`,
+					})
+					setTimeout(() => {
+						notificationDispatch({ type: "HIDE" })
+					}, 5000)
+				},
+			}
+		)
 	}
 
 	return (
