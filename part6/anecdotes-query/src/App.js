@@ -31,7 +31,7 @@ const App = () => {
 	if (isLoading) return <div>loading data...</div>
 	if (isError)
 		return (
-			<div>anecote service not available due to problems in server</div>
+			<div>anecdote service not available due to problems in server</div>
 		)
 	const anecdotes = data
 
