@@ -1,4 +1,4 @@
-![ceritficate-till-the-moment-of-the-current-module-on-the-course](https://raw.githubusercontent.com/Juanescacha/FullStackOpen-2022/main/certificates/certificate-fullstack.png)
+![ceritficate-till-the-moment-of-the-current-module-on-the-course](https://raw.githubusercontent.com/Juanescacha/FullStackOpen-2022/main/certificate/certificate.png)
 
 # COURSE Full Stack Open 2022
 
