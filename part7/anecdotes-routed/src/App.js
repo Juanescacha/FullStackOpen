@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Routes, Route, Link, useMatch } from "react-router-dom"
+import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom"
 
 const Menu = () => {
 	const padding = {
@@ -69,19 +69,21 @@ const Footer = () => (
 	</div>
 )
 
-const CreateNew = props => {
+const CreateNew = ({ addNew }) => {
 	const [content, setContent] = useState("")
 	const [author, setAuthor] = useState("")
 	const [info, setInfo] = useState("")
+	const navigate = useNavigate()
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		props.addNew({
+		addNew({
 			content,
 			author,
 			info,
 			votes: 0,
 		})
+		navigate("/")
 	}
 
 	return (
@@ -132,6 +134,15 @@ const Anecdote = ({ anecdote }) => {
 	)
 }
 
+const Notification = ({ notification }) => {
+	const style = {
+		border: "solid",
+		padding: 10,
+		borderWidth: 1,
+	}
+	return notification && <div style={style}>{notification}</div>
+}
+
 const App = () => {
 	const [anecdotes, setAnecdotes] = useState([
 		{
@@ -150,7 +161,7 @@ const App = () => {
 		},
 	])
 
-	// const [notification, setNotification] = useState("")
+	const [notification, setNotification] = useState("")
 
 	const match = useMatch("/anecdotes/:id")
 	const anecdote = match
@@ -160,26 +171,30 @@ const App = () => {
 	const addNew = anecdote => {
 		anecdote.id = Math.round(Math.random() * 10000)
 		setAnecdotes(anecdotes.concat(anecdote))
+		setNotification(`a new anecdote ${anecdote.content} created!`)
+		setTimeout(() => {
+			setNotification("")
+		}, 5000)
 	}
 
-	// const anecdoteById = id => anecdotes.find(a => a.id === id)
+	const anecdoteById = id => anecdotes.find(a => a.id === id)
 
-	/* const vote = id => {
+	const vote = id => {
 		const anecdote = anecdoteById(id)
-
 		const voted = {
 			...anecdote,
 			votes: anecdote.votes + 1,
 		}
-
 		setAnecdotes(anecdotes.map(a => (a.id === id ? voted : a)))
-	} */
+	}
 
 	return (
 		<div>
 			<h1>Software anecdotes</h1>
 			<Menu />
+			<Notification notification={notification} />
 			<Routes>
+				{console.log(vote)}
 				<Route
 					path="/"
 					element={<AnecdoteList anecdotes={anecdotes} />}
