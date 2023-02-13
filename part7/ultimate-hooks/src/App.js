@@ -8,20 +8,41 @@ const useField = type => {
 		setValue(event.target.value)
 	}
 
+	const onReset = () => {
+		setValue("")
+	}
+
 	return {
 		type,
 		value,
 		onChange,
+		onReset,
 	}
 }
 
 const useResource = baseUrl => {
 	const [resources, setResources] = useState([])
 
-	// ...
+	useEffect(() => {
+		axios
+			.get(baseUrl)
+			.then(response => {
+				setResources(response.data)
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}, [baseUrl])
 
 	const create = resource => {
-		// ...
+		axios
+			.post(baseUrl, resource)
+			.then(response => {
+				setResources(resources.concat(response.data))
+			})
+			.catch(error => {
+				console.log(error)
+			})
 	}
 
 	const service = {
@@ -44,11 +65,14 @@ const App = () => {
 	const handleNoteSubmit = event => {
 		event.preventDefault()
 		noteService.create({ content: content.value })
+		content.onReset()
 	}
 
 	const handlePersonSubmit = event => {
 		event.preventDefault()
 		personService.create({ name: name.value, number: number.value })
+		name.onReset()
+		number.onReset()
 	}
 
 	return (
