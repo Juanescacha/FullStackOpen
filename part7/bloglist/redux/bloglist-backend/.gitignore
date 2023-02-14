@@ -1,0 +1,4 @@
+/node_modules
+/requests
+/build
+.env
