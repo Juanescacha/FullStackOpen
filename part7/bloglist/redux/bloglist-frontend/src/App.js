@@ -16,8 +16,7 @@ import "./app.css"
 import PropTypes from "prop-types"
 
 //redux
-import { useDispatch, useSelector } from "react-redux"
-import notificationReducer from "./reducers/notificationReducer"
+import { useDispatch } from "react-redux"
 import { setNotificationTimeout } from "./reducers/notificationReducer"
 
 const Toggable = forwardRef((props, ref) => {
