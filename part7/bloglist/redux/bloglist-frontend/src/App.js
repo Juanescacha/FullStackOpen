@@ -7,6 +7,7 @@ import {
 } from "react"
 import Blog from "./components/Blog"
 import BlogForm from "./components/BlogForm"
+import Notification from "./components/Notification"
 
 import blogService from "./services/blogs"
 import loginService from "./services/login"
@@ -14,14 +15,10 @@ import "./app.css"
 
 import PropTypes from "prop-types"
 
-const Notification = ({ message }) => {
-	if (message[0] === "") {
-		return null
-	}
-
-	const type = message[1] ? "success" : "error"
-	return <div className={type}>{message[0]}</div>
-}
+//redux
+import { useDispatch, useSelector } from "react-redux"
+import notificationReducer from "./reducers/notificationReducer"
+import { setNotificationTimeout } from "./reducers/notificationReducer"
 
 const Toggable = forwardRef((props, ref) => {
 	const [visible, setVisible] = useState(false)
@@ -65,13 +62,13 @@ Toggable.displayName = "Toggable"
 
 const App = () => {
 	const blogFormRef = useRef()
+	const dispatch = useDispatch()
 
 	const [blogs, setBlogs] = useState([])
 	const [user, setUser] = useState(null)
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [updateBlogs, setUpdateBlogs] = useState(false)
-	const [message, setMessage] = useState(["", true])
 
 	const handleLogin = async event => {
 		event.preventDefault()
@@ -83,26 +80,25 @@ const App = () => {
 			setUsername("")
 			setPassword("")
 			blogService.setToken(user.token)
-			setMessage(["Successfully logged in", true])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully logged in",
+					"success",
+					3000
+				)
+			)
 		} catch (exception) {
 			console.error("Wrong credentials", exception)
-			setMessage(["Wrong Credentials", false])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(setNotificationTimeout("Wrong Credentials", "error", 3000))
 		}
 	}
 
 	const handleLogout = () => {
 		window.localStorage.removeItem("loggedUser")
 		setUser(null)
-		setMessage(["Successfully logged out", true])
-		setTimeout(() => {
-			setMessage(["", true])
-		}, 3000)
+		dispatch(
+			setNotificationTimeout("Successfully logged out", "success", 3000)
+		)
 	}
 
 	const createBlog = async blog => {
@@ -110,15 +106,15 @@ const App = () => {
 			await blogService.create(blog)
 			blogFormRef.current.toggleVisibility()
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Successfully created blog", true])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully created blog",
+					"success",
+					3000
+				)
+			)
 		} catch (error) {
-			setMessage(["blog not created", false])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(setNotificationTimeout("Blog not created", "error", 3000))
 			console.error("please enther valid data and fill all fields", error)
 		}
 	}
@@ -127,15 +123,15 @@ const App = () => {
 		try {
 			await blogService.addLike(blog, id)
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Successfully liked blog", true])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully liked blog",
+					"success",
+					3000
+				)
+			)
 		} catch (error) {
-			setMessage(["like not added", false])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(setNotificationTimeout("Liked not added", "error", 3000))
 			console.error("error liking a blog", error)
 		}
 	}
@@ -144,19 +140,22 @@ const App = () => {
 		try {
 			await blogService.remove(id)
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Blog successfully removed", true])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(
+				setNotificationTimeout(
+					"Blog successfully removed",
+					"success",
+					3000
+				)
+			)
 		} catch (error) {
 			console.error("error deleting a blog", error)
-			setMessage([
-				"Error Removing Blog, you cannot remove a Blog that its not yours",
-				false,
-			])
-			setTimeout(() => {
-				setMessage(["", true])
-			}, 3000)
+			dispatch(
+				setNotificationTimeout(
+					"Error removing the Blog, you cannot remove a Blog that its not yours",
+					"error",
+					3000
+				)
+			)
 		}
 	}
 
@@ -179,7 +178,7 @@ const App = () => {
 		return (
 			<div>
 				<h1>Blogs</h1>
-				<Notification message={message} />
+				<Notification />
 				<Toggable id="login" buttonLabel="login">
 					<h2>Log in</h2>
 					<form onSubmit={handleLogin}>
@@ -219,7 +218,7 @@ const App = () => {
 	return (
 		<div>
 			<h1>Blogs</h1>
-			<Notification message={message} />
+			<Notification />
 			<div>
 				{user.name} - logged in{" "}
 				<button type="button" onClick={handleLogout}>
