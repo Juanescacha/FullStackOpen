@@ -16,8 +16,9 @@ import "./app.css"
 import PropTypes from "prop-types"
 
 //redux
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setNotificationTimeout } from "./reducers/notificationReducer"
+import { setBlogs } from "./reducers/blogReducer"
 
 const Toggable = forwardRef((props, ref) => {
 	const [visible, setVisible] = useState(false)
@@ -63,7 +64,8 @@ const App = () => {
 	const blogFormRef = useRef()
 	const dispatch = useDispatch()
 
-	const [blogs, setBlogs] = useState([])
+	// const [blogs, setBlogs] = useState([])
+	const blogs = useSelector(state => state.blogs)
 	const [user, setUser] = useState(null)
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -98,24 +100,6 @@ const App = () => {
 		dispatch(
 			setNotificationTimeout("Successfully logged out", "success", 3000)
 		)
-	}
-
-	const createBlog = async blog => {
-		try {
-			await blogService.create(blog)
-			blogFormRef.current.toggleVisibility()
-			setUpdateBlogs(!updateBlogs)
-			dispatch(
-				setNotificationTimeout(
-					"Successfully created blog",
-					"success",
-					3000
-				)
-			)
-		} catch (error) {
-			dispatch(setNotificationTimeout("Blog not created", "error", 3000))
-			console.error("please enther valid data and fill all fields", error)
-		}
 	}
 
 	const updateLike = async (blog, id) => {
@@ -158,10 +142,18 @@ const App = () => {
 		}
 	}
 
+	const toggle = () => {
+		blogFormRef.current.toggleVisibility()
+		setUpdateBlogs(!updateBlogs)
+	}
+
 	useEffect(() => {
 		blogService.getAll().then(blogs => {
 			blogs.sort((a, b) => b.likes - a.likes)
-			setBlogs(blogs)
+			dispatch(setBlogs(blogs))
+			/* blogService.getAll().then(blogs => {
+			blogs.sort((a, b) => b.likes - a.likes)
+			setBlogs(blogs) */
 		})
 	}, [updateBlogs])
 
@@ -171,7 +163,7 @@ const App = () => {
 			setUser(loggedUser)
 			blogService.setToken(loggedUser.token)
 		}
-	}, [])
+	}, [dispatch])
 
 	if (user === null) {
 		return (
@@ -229,7 +221,7 @@ const App = () => {
 				buttonLabel="Create new blog"
 				ref={blogFormRef}
 			>
-				<BlogForm createBlog={createBlog} />
+				<BlogForm toggle={toggle} />
 			</Toggable>
 			<br />
 			{blogs.map(blog => (

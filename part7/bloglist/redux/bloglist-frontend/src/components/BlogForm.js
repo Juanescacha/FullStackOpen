@@ -1,14 +1,35 @@
 import { useState } from "react"
 
-const NoteForm = ({ createBlog }) => {
+import blogService from "../services/blogs"
+import { useDispatch } from "react-redux"
+import { setNotificationTimeout } from "../reducers/notificationReducer"
+// import { addBlog } from "../reducers/blogReducer"
+
+const BlogForm = ({ toggle }) => {
+	const dispatch = useDispatch()
+
 	const [title, setTitle] = useState("")
 	const [author, setAuthor] = useState("")
 	const [url, setUrl] = useState("")
 
-	const addBlog = event => {
+	const createBlog = async event => {
 		event.preventDefault()
 		const blog = { title, author, url }
-		createBlog(blog)
+		toggle()
+		try {
+			await blogService.create(blog)
+			// setUpdateBlogs(!updateBlogs)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully created blog",
+					"success",
+					3000
+				)
+			)
+		} catch (error) {
+			dispatch(setNotificationTimeout("Blog not created", "error", 3000))
+			console.error("please enther valid data and fill all fields", error)
+		}
 
 		setAuthor("")
 		setTitle("")
@@ -18,7 +39,7 @@ const NoteForm = ({ createBlog }) => {
 	return (
 		<>
 			<h1>create new</h1>
-			<form onSubmit={addBlog}>
+			<form onSubmit={createBlog}>
 				title:{" "}
 				<input
 					id="title"
@@ -54,4 +75,4 @@ const NoteForm = ({ createBlog }) => {
 	)
 }
 
-export default NoteForm
+export default BlogForm
