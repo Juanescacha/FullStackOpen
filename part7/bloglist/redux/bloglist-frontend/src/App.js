@@ -19,6 +19,7 @@ import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { setNotificationTimeout } from "./reducers/notificationReducer"
 import { setBlogs } from "./reducers/blogReducer"
+import { setUser } from "./reducers/userReducer"
 
 const Toggable = forwardRef((props, ref) => {
 	const [visible, setVisible] = useState(false)
@@ -66,7 +67,8 @@ const App = () => {
 
 	// const [blogs, setBlogs] = useState([])
 	const blogs = useSelector(state => state.blogs)
-	const [user, setUser] = useState(null)
+	const user = useSelector(state => state.user)
+	// const [user, setUser] = useState(null)
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [updateBlogs, setUpdateBlogs] = useState(false)
@@ -75,12 +77,12 @@ const App = () => {
 		event.preventDefault()
 
 		try {
-			const user = await loginService.login({ username, password })
-			setUser(user)
-			window.localStorage.setItem("loggedUser", JSON.stringify(user))
+			const newUser = await loginService.login({ username, password })
+			dispatch(setUser(newUser))
+			window.localStorage.setItem("loggedUser", JSON.stringify(newUser))
 			setUsername("")
 			setPassword("")
-			blogService.setToken(user.token)
+			blogService.setToken(newUser.token)
 			dispatch(
 				setNotificationTimeout(
 					"Successfully logged in",
@@ -96,7 +98,7 @@ const App = () => {
 
 	const handleLogout = () => {
 		window.localStorage.removeItem("loggedUser")
-		setUser(null)
+		dispatch(setUser(null))
 		dispatch(
 			setNotificationTimeout("Successfully logged out", "success", 3000)
 		)
@@ -157,7 +159,7 @@ const App = () => {
 	useEffect(() => {
 		const loggedUser = JSON.parse(window.localStorage.getItem("loggedUser"))
 		if (loggedUser) {
-			setUser(loggedUser)
+			dispatch(setUser(loggedUser))
 			blogService.setToken(loggedUser.token)
 		}
 	}, [dispatch])
