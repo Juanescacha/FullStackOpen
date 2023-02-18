@@ -2,6 +2,15 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App"
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+import { QueryClient, QueryClientProvider } from "react-query"
+import { NotificationContextProvider } from "./NotificationContext"
 
-// comment test
+const queryClient = new QueryClient()
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+	<NotificationContextProvider>
+		<QueryClientProvider client={queryClient}>
+			<App />
+		</QueryClientProvider>
+	</NotificationContextProvider>
+)

@@ -14,6 +14,11 @@ import "./app.css"
 
 import PropTypes from "prop-types"
 
+import {
+	useNotificationValue,
+	useNotificationDispatch,
+} from "./NotificationContext"
+
 const Notification = ({ message }) => {
 	if (message[0] === "") {
 		return null
@@ -71,7 +76,9 @@ const App = () => {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [updateBlogs, setUpdateBlogs] = useState(false)
-	const [message, setMessage] = useState(["", true])
+	// const [message, setMessage] = useState(["", true])
+	const message = useNotificationValue()
+	const setMessage = useNotificationDispatch()
 
 	const handleLogin = async event => {
 		event.preventDefault()
@@ -83,15 +90,25 @@ const App = () => {
 			setUsername("")
 			setPassword("")
 			blogService.setToken(user.token)
-			setMessage(["Successfully logged in", true])
+			setMessage({
+				type: "SHOW",
+				data: ["Successfully logged in", true],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		} catch (exception) {
 			console.error("Wrong credentials", exception)
-			setMessage(["Wrong Credentials", false])
+			setMessage({
+				type: "SHOW",
+				data: ["Wrong credentials", false],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		}
 	}
@@ -99,9 +116,14 @@ const App = () => {
 	const handleLogout = () => {
 		window.localStorage.removeItem("loggedUser")
 		setUser(null)
-		setMessage(["Successfully logged out", true])
+		setMessage({
+			type: "SHOW",
+			data: ["Successfully logged out", true],
+		})
 		setTimeout(() => {
-			setMessage(["", true])
+			setMessage({
+				type: "HIDE",
+			})
 		}, 3000)
 	}
 
@@ -110,14 +132,24 @@ const App = () => {
 			await blogService.create(blog)
 			blogFormRef.current.toggleVisibility()
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Successfully created blog", true])
+			setMessage({
+				type: "SHOW",
+				data: ["Successfully created blog", true],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		} catch (error) {
-			setMessage(["blog not created", false])
+			setMessage({
+				type: "SHOW",
+				data: ["Error creating blog", false],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 			console.error("please enther valid data and fill all fields", error)
 		}
@@ -127,14 +159,24 @@ const App = () => {
 		try {
 			await blogService.addLike(blog, id)
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Successfully liked blog", true])
+			setMessage({
+				type: "SHOW",
+				data: ["like added", true],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		} catch (error) {
-			setMessage(["like not added", false])
+			setMessage({
+				type: "SHOW",
+				data: ["Error adding like", false],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 			console.error("error liking a blog", error)
 		}
@@ -144,18 +186,28 @@ const App = () => {
 		try {
 			await blogService.remove(id)
 			setUpdateBlogs(!updateBlogs)
-			setMessage(["Blog successfully removed", true])
+			setMessage({
+				type: "SHOW",
+				data: ["Blog removed", true],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		} catch (error) {
 			console.error("error deleting a blog", error)
-			setMessage([
-				"Error Removing Blog, you cannot remove a Blog that its not yours",
-				false,
-			])
+			setMessage({
+				type: "SHOW",
+				data: [
+					"Error Deleting Blog, you cannot delete a Blog that its not yours",
+					false,
+				],
+			})
 			setTimeout(() => {
-				setMessage(["", true])
+				setMessage({
+					type: "HIDE",
+				})
 			}, 3000)
 		}
 	}
