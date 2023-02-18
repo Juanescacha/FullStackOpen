@@ -23,10 +23,14 @@ const create = async newObject => {
 	return response.data
 }
 
-const addLike = async (newObject, id) => {
+const addLike = async newObject => {
 	const config = { headers: { Authorization: token } }
 
-	const response = await axios.put(`${baseUrl}/${id}`, newObject, config)
+	const response = await axios.put(
+		`${baseUrl}/${newObject.id}`,
+		newObject,
+		config
+	)
 	return response.data
 }
 
