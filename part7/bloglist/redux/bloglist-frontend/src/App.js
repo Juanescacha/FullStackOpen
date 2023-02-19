@@ -10,6 +10,7 @@ import BlogForm from "./components/BlogForm"
 import Notification from "./components/Notification"
 
 import blogService from "./services/blogs"
+import usersService from "./services/users"
 import loginService from "./services/login"
 import "./app.css"
 
@@ -20,6 +21,148 @@ import { useDispatch, useSelector } from "react-redux"
 import { setNotificationTimeout } from "./reducers/notificationReducer"
 import { setBlogs } from "./reducers/blogReducer"
 import { setUser } from "./reducers/userReducer"
+import { setUsers } from "./reducers/usersReducer"
+
+export const Users = () => {
+	const dispatch = useDispatch()
+	const users = useSelector(state => state.users)
+
+	useEffect(() => {
+		usersService.getAll().then(users => {
+			dispatch(setUsers(users))
+			console.log("users", users)
+		})
+	}, [])
+	return (
+		<>
+			<Base />
+			<br />
+			<h1>Users</h1>
+			{users.map(user => (
+				<div key={user.id}>
+					{user.name} - {user.blogs.length}
+				</div>
+			))}
+		</>
+	)
+}
+
+export const Base = () => {
+	const dispatch = useDispatch()
+
+	const user = useSelector(state => state.user)
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
+
+	const [updateBlogs, setUpdateBlogs] = useState(false)
+	const blogFormRef = useRef()
+
+	useEffect(() => {
+		const loggedUser = JSON.parse(window.localStorage.getItem("loggedUser"))
+		if (loggedUser) {
+			dispatch(setUser(loggedUser))
+			blogService.setToken(loggedUser.token)
+			console.log("loggedUser", loggedUser)
+		}
+	}, [])
+
+	const toggle = () => {
+		blogFormRef.current.toggleVisibility()
+		setUpdateBlogs(!updateBlogs)
+	}
+
+	const handleLogout = () => {
+		window.localStorage.removeItem("loggedUser")
+		dispatch(setUser(null))
+		dispatch(
+			setNotificationTimeout("Successfully logged out", "success", 3000)
+		)
+	}
+
+	const handleLogin = async event => {
+		event.preventDefault()
+
+		try {
+			const newUser = await loginService.login({ username, password })
+			dispatch(setUser(newUser))
+			window.localStorage.setItem("loggedUser", JSON.stringify(newUser))
+			setUsername("")
+			setPassword("")
+			blogService.setToken(newUser.token)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully logged in",
+					"success",
+					3000
+				)
+			)
+		} catch (exception) {
+			console.error("Wrong credentials", exception)
+			dispatch(setNotificationTimeout("Wrong Credentials", "error", 3000))
+		}
+	}
+
+	if (user === null) {
+		return (
+			<div>
+				<h1>Blogs</h1>
+				<Notification />
+				<Toggable id="login" buttonLabel="login">
+					<h2>Log in</h2>
+					<form onSubmit={handleLogin}>
+						<div>
+							username{" "}
+							<input
+								id="username"
+								type="text"
+								name="Username"
+								value={username}
+								onChange={({ target }) =>
+									setUsername(target.value)
+								}
+							/>
+						</div>
+						<div>
+							password{" "}
+							<input
+								id="password"
+								type="password"
+								name="Password"
+								value={password}
+								onChange={({ target }) =>
+									setPassword(target.value)
+								}
+							/>
+						</div>
+						<button id="login-button" type="submit">
+							login
+						</button>
+					</form>
+				</Toggable>
+			</div>
+		)
+	}
+
+	return (
+		<div>
+			<h1>Blogs</h1>
+			<Notification />
+			<div>
+				{user.name} - logged in{" "}
+				<button type="button" onClick={handleLogout}>
+					logout
+				</button>
+			</div>
+			<Toggable
+				id="create"
+				buttonLabel="Create new blog"
+				ref={blogFormRef}
+			>
+				<BlogForm toggle={toggle} />
+			</Toggable>
+		</div>
+	)
+}
 
 const Toggable = forwardRef((props, ref) => {
 	const [visible, setVisible] = useState(false)
