@@ -26,6 +26,62 @@ import { setUsers } from "./reducers/usersReducer"
 //react router
 import { Link, useParams } from "react-router-dom"
 
+export const BlogView = () => {
+	const { id } = useParams()
+	const dispatch = useDispatch()
+	const blogs = useSelector(state => state.blogs)
+	const blog = blogs.find(blog => blog.id === id)
+	const [updateBlogs, setUpdateBlogs] = useState(false)
+
+	const handleLike = async () => {
+		const blogObj = {
+			title: blog.title,
+			author: blog.author,
+			url: blog.url,
+			likes: blog.likes + 1,
+		}
+		try {
+			await blogService.addLike(blogObj, blog.id)
+			setUpdateBlogs(!updateBlogs)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully liked blog",
+					"success",
+					3000
+				)
+			)
+		} catch (error) {
+			dispatch(setNotificationTimeout("Liked not added", "error", 3000))
+			console.error("error liking a blog", error)
+		}
+	}
+
+	useEffect(() => {
+		blogService.getAll().then(blogs => {
+			dispatch(setBlogs(blogs))
+			console.log("blogs", blogs)
+		})
+	}, [updateBlogs])
+
+	if (!blog) {
+		return null
+	}
+
+	return (
+		<>
+			<Base />
+			<br />
+			{blog.title} {blog.author}
+			<br />
+			{blog.url}
+			<br />
+			likes {blog.likes} <button onClick={handleLike}>like</button>
+			<br />
+			{blog.author}
+			<br />
+		</>
+	)
+}
 export const Users = () => {
 	const dispatch = useDispatch()
 	const users = useSelector(state => state.users)
@@ -404,13 +460,15 @@ const App = () => {
 			</Toggable>
 			<br />
 			{blogs.map(blog => (
-				<Blog
-					key={blog.id}
-					blog={blog}
-					updateLike={updateLike}
-					removeBlog={removeBlog}
-					user={user}
-				/>
+				<Link key={blog.id} to={`/blogs/${blog.id}`}>
+					<Blog
+						key={blog.id}
+						blog={blog}
+						updateLike={updateLike}
+						removeBlog={removeBlog}
+						user={user}
+					/>
+				</Link>
 			))}
 		</div>
 	)
