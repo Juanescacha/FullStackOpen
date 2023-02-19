@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import App, { Users } from "./App"
+import App, { Users, User } from "./App"
 
 import store from "./store"
 import { Provider } from "react-redux"
@@ -13,6 +13,7 @@ const router = createBrowserRouter([
 		path: "/users",
 		element: <Users />,
 	},
+	{ path: "/users/:id", element: <User /> },
 ])
 
 ReactDOM.createRoot(document.getElementById("root")).render(

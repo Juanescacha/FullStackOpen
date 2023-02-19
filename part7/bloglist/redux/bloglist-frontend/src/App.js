@@ -23,6 +23,9 @@ import { setBlogs } from "./reducers/blogReducer"
 import { setUser } from "./reducers/userReducer"
 import { setUsers } from "./reducers/usersReducer"
 
+//react router
+import { Link, useParams } from "react-router-dom"
+
 export const Users = () => {
 	const dispatch = useDispatch()
 	const users = useSelector(state => state.users)
@@ -40,9 +43,43 @@ export const Users = () => {
 			<h1>Users</h1>
 			{users.map(user => (
 				<div key={user.id}>
-					{user.name} - {user.blogs.length}
+					<Link to={`/users/${user.id}`}>{user.name}</Link> -{" "}
+					{user.blogs.length}
 				</div>
 			))}
+		</>
+	)
+}
+
+export const User = () => {
+	const { id } = useParams()
+	console.log(id)
+	const dispatch = useDispatch()
+	const users = useSelector(state => state.users)
+	const user = users.find(user => user.id === id)
+
+	useEffect(() => {
+		usersService.getAll().then(users => {
+			dispatch(setUsers(users))
+			console.log("users", users)
+		})
+	}, [])
+
+	if (!user) {
+		return null
+	}
+
+	return (
+		<>
+			<Base />
+			<br />
+			<h1>{user.name}</h1>
+			<h3>Added blogs</h3>
+			<ul>
+				{user.blogs.map(blog => (
+					<li key={blog.id}>{blog.title}</li>
+				))}
+			</ul>
 		</>
 	)
 }
