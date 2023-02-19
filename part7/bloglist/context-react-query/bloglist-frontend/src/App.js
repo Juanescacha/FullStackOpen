@@ -19,6 +19,8 @@ import {
 	useNotificationDispatch,
 } from "./NotificationContext"
 
+import { useLoginValue, useLoginDispatch } from "./loginContext"
+
 import { useQuery, useMutation, useQueryClient } from "react-query"
 
 const Notification = ({ message }) => {
@@ -94,7 +96,10 @@ const App = () => {
 
 	// const [blogs, setBlogs] = useState([])
 
-	const [user, setUser] = useState(null)
+	// const [user, setUser] = useState(null)
+	const user = useLoginValue()
+	const setUser = useLoginDispatch()
+
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [updateBlogs, setUpdateBlogs] = useState(false)
@@ -111,7 +116,7 @@ const App = () => {
 
 		try {
 			const user = await loginService.login({ username, password })
-			setUser(user)
+			setUser({ type: "SET", data: user })
 			window.localStorage.setItem("loggedUser", JSON.stringify(user))
 			setUsername("")
 			setPassword("")
@@ -141,7 +146,7 @@ const App = () => {
 
 	const handleLogout = () => {
 		window.localStorage.removeItem("loggedUser")
-		setUser(null)
+		setUser({ type: "REMOVE" })
 		setMessage({
 			type: "SHOW",
 			data: ["Successfully logged out", true],
@@ -244,12 +249,15 @@ const App = () => {
 	useEffect(() => {
 		const loggedUser = JSON.parse(window.localStorage.getItem("loggedUser"))
 		if (loggedUser) {
-			setUser(loggedUser)
+			setUser({
+				type: "SET",
+				data: loggedUser,
+			})
 			blogService.setToken(loggedUser.token)
 		}
 	}, [])
 
-	if (user === null) {
+	if (user === false) {
 		return (
 			<div>
 				<h1>Blogs</h1>
