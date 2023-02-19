@@ -79,6 +79,12 @@ export const BlogView = () => {
 			<br />
 			{blog.author}
 			<br />
+			<h3>comments</h3>
+			<ul>
+				{blog.comments.map(comment => (
+					<li key={Math.random() * 10000}>{comment}</li>
+				))}
+			</ul>
 		</>
 	)
 }
