@@ -1,14 +1,14 @@
 import { useState } from "react"
 
-const Blog = ({ blog, updateLike, removeBlog, user }) => {
-	const [visible, setVisible] = useState(false)
+const Blog = ({ blog /* updateLike, removeBlog, user  */ }) => {
+	const [visible /* setVisible */] = useState(false)
 
-	const showWhenVisible = { display: visible ? "" : "none" }
+	// const showWhenVisible = { display: visible ? "" : "none" }
 	const hideWhenVisible = { display: visible ? "none" : "" }
 
-	const toggleVisibility = () => {
-		setVisible(!visible)
-	}
+	// const toggleVisibility = () => {
+	// 	setVisible(!visible)
+	// }
 
 	const blogStyle = {
 		paddingTop: 10,
@@ -18,7 +18,7 @@ const Blog = ({ blog, updateLike, removeBlog, user }) => {
 		marginBottom: 5,
 	}
 
-	const handleLike = () => {
+	/* const handleLike = () => {
 		const blogObj = {
 			title: blog.title,
 			author: blog.author,
@@ -26,27 +26,26 @@ const Blog = ({ blog, updateLike, removeBlog, user }) => {
 			likes: blog.likes + 1,
 		}
 		updateLike(blogObj, blog.id)
-	}
+	} */
 
-	const handleRemove = () => {
+	/* const handleRemove = () => {
 		if (
 			window.confirm("Are you sure you want to remove this blog?") ===
 			true
 		) {
 			removeBlog(blog.id)
 		}
-	}
+	} */
 
-	const showDelete = blog.user.id === user.id ? true : false
+	// const showDelete = blog.user.id === user.id ? true : false
 
 	return (
 		<>
 			<div style={blogStyle} className="blog">
 				<div style={hideWhenVisible}>
-					{blog.title} {blog.author}{" "}
-					<button onClick={toggleVisibility}>view</button>
+					{blog.title} {blog.author}
 				</div>
-				<div style={showWhenVisible} className="hidden">
+				{/* <div style={showWhenVisible} className="hidden">
 					{blog.title} {blog.author}
 					<button onClick={toggleVisibility}>hide</button>
 					<br />
@@ -60,7 +59,7 @@ const Blog = ({ blog, updateLike, removeBlog, user }) => {
 					{showDelete && (
 						<button onClick={handleRemove}>remove</button>
 					)}
-				</div>
+				</div> */}
 			</div>
 		</>
 	)

@@ -238,14 +238,16 @@ export const Base = () => {
 
 	return (
 		<div>
-			<h1>Blogs</h1>
-			<Notification />
-			<div>
+			<div style={{ backgroundColor: "lightgray", padding: 10 }}>
+				<Link to="/"> blogs </Link>
+				<Link to="/users"> users </Link>
 				{user.name} - logged in{" "}
 				<button type="button" onClick={handleLogout}>
 					logout
 				</button>
 			</div>
+			<h1>Blogs</h1>
+			<Notification />
 			<Toggable
 				id="create"
 				buttonLabel="Create new blog"
@@ -443,14 +445,16 @@ const App = () => {
 
 	return (
 		<div>
-			<h1>Blogs</h1>
-			<Notification />
-			<div>
+			<div style={{ backgroundColor: "lightgray", padding: 10 }}>
+				<Link to="/"> blogs </Link>
+				<Link to="/users"> users </Link>
 				{user.name} - logged in{" "}
 				<button type="button" onClick={handleLogout}>
 					logout
 				</button>
 			</div>
+			<h1>Blog app</h1>
+			<Notification />
 			<Toggable
 				id="create"
 				buttonLabel="Create new blog"
