@@ -82,4 +82,26 @@ blogsRouter.put("/:id", async (request, response) => {
 	}
 })
 
+blogsRouter.put("/:id/comments", async (request, response) => {
+	const { comment } = request.body
+	const id = request.params.id
+
+	if (!comment) {
+		return response.status(400).json({ error: "Comment missing" })
+	}
+
+	const result = await Blog.findOneAndUpdate(
+		{ _id: id },
+		{ $push: { comments: comment } },
+		{ new: true }
+	)
+
+	if (!result) {
+		return response
+			.status(400)
+			.json({ error: `Blog by ID ${id} does not exist` })
+	}
+	return response.status(200).json(result)
+})
+
 module.exports = blogsRouter

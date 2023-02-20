@@ -30,6 +30,17 @@ const addLike = async (newObject, id) => {
 	return response.data
 }
 
+const addComment = async (comment, id) => {
+	const config = { headers: { Authorization: token } }
+
+	const response = await axios.put(
+		`${baseUrl}/${id}/comments`,
+		{ comment },
+		config
+	)
+	return response.data
+}
+
 const remove = async id => {
 	const config = { headers: { Authorization: token } }
 
@@ -37,6 +48,14 @@ const remove = async id => {
 	return response.data
 }
 
-const blogService = { setToken, getAll, create, getToken, addLike, remove }
+const blogService = {
+	setToken,
+	getAll,
+	create,
+	getToken,
+	addLike,
+	remove,
+	addComment,
+}
 
 export default blogService

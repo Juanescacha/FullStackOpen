@@ -67,6 +67,26 @@ export const BlogView = () => {
 		return null
 	}
 
+	const handleComment = async event => {
+		event.preventDefault()
+		const comment = event.target[0].value
+		event.target[0].value = ""
+		try {
+			await blogService.addComment(comment, blog.id)
+			setUpdateBlogs(!updateBlogs)
+			dispatch(
+				setNotificationTimeout(
+					"Successfully added comment",
+					"success",
+					3000
+				)
+			)
+		} catch (error) {
+			dispatch(setNotificationTimeout("Comment not added", "error", 3000))
+			console.error("error adding a comment", error)
+		}
+	}
+
 	return (
 		<>
 			<Base />
@@ -80,6 +100,10 @@ export const BlogView = () => {
 			{blog.author}
 			<br />
 			<h3>comments</h3>
+			<form onSubmit={handleComment}>
+				<input type="text" />
+				<button type="submit">add comment</button>
+			</form>
 			<ul>
 				{blog.comments.map(comment => (
 					<li key={Math.random() * 10000}>{comment}</li>
