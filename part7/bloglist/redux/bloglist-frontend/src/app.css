@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .success {
 	color: rgb(0, 133, 51);
 	background: lightgray;

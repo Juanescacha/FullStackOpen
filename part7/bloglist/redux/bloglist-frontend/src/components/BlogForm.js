@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import blogService from "../services/blogs"
 import { useDispatch } from "react-redux"
 import { setNotificationTimeout } from "../reducers/notificationReducer"
+import blogService from "../services/blogs"
 // import { addBlog } from "../reducers/blogReducer"
 
 const BlogForm = ({ toggle }) => {
@@ -67,7 +67,11 @@ const BlogForm = ({ toggle }) => {
 					onChange={({ target }) => setUrl(target.value)}
 				/>
 				<br />
-				<button id="create-button" type="submit">
+				<button
+					id="create-button"
+					type="submit"
+					className="mx-10 mt-10 h-12 w-60 rounded-lg bg-sky-500 px-6 font-semibold text-white shadow-inner hover:bg-sky-400 hover:shadow-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
 					create
 				</button>
 			</form>

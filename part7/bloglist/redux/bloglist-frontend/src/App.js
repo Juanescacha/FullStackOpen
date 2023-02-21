@@ -1,25 +1,23 @@
 import {
-	useState,
-	useEffect,
 	forwardRef,
+	useEffect,
 	useImperativeHandle,
 	useRef,
+	useState,
 } from "react"
 import Blog from "./components/Blog"
 import BlogForm from "./components/BlogForm"
 import Notification from "./components/Notification"
 
-import blogService from "./services/blogs"
-import usersService from "./services/users"
-import loginService from "./services/login"
-import "./app.css"
-
 import PropTypes from "prop-types"
-
+import "./app.css"
+import blogService from "./services/blogs"
+import loginService from "./services/login"
+import usersService from "./services/users"
 //redux
 import { useDispatch, useSelector } from "react-redux"
-import { setNotificationTimeout } from "./reducers/notificationReducer"
 import { setBlogs } from "./reducers/blogReducer"
+import { setNotificationTimeout } from "./reducers/notificationReducer"
 import { setUser } from "./reducers/userReducer"
 import { setUsers } from "./reducers/usersReducer"
 
@@ -268,15 +266,29 @@ export const Base = () => {
 
 	return (
 		<div>
-			<div style={{ backgroundColor: "lightgray", padding: 10 }}>
-				<Link to="/"> blogs </Link>
-				<Link to="/users"> users </Link>
-				{user.name} - logged in{" "}
-				<button type="button" onClick={handleLogout}>
+			<div className="space-x-5 bg-slate-500 pt-4 pb-4 pl-2 text-slate-200">
+				<Link
+					to="/"
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
+					blogs
+				</Link>
+				<Link
+					to="/users"
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
+					users
+				</Link>
+				<span>{user.name} - logged in</span>
+				<button
+					type="button"
+					onClick={handleLogout}
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
 					logout
 				</button>
 			</div>
-			<h1>Blogs</h1>
+			<h1 className="m-5 text-4xl font-black">Blogs</h1>
 			<Notification />
 			<Toggable
 				id="create"
@@ -308,14 +320,21 @@ const Toggable = forwardRef((props, ref) => {
 	return (
 		<div>
 			<div style={hideWhenVisible}>
-				<br />
-				<button id={props.id} onClick={toggleVisibility}>
+				<button
+					id={props.id}
+					onClick={toggleVisibility}
+					className="mx-3 mt-10 h-12 w-60 rounded-lg bg-sky-500 px-6 font-semibold text-white shadow-inner hover:bg-sky-400 hover:shadow-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
 					{props.buttonLabel}
 				</button>
 			</div>
 			<div style={showWhenVisible}>
 				{props.children}
-				<button id="cancel" onClick={toggleVisibility}>
+				<button
+					id="cancel"
+					onClick={toggleVisibility}
+					className="mx-10 mt-3 h-12 w-60 rounded-lg bg-sky-500 px-6 font-semibold text-white shadow-inner hover:bg-sky-400 hover:shadow-none focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
 					cancel
 				</button>
 			</div>
@@ -475,15 +494,29 @@ const App = () => {
 
 	return (
 		<div>
-			<div style={{ backgroundColor: "lightgray", padding: 10 }}>
-				<Link to="/"> blogs </Link>
-				<Link to="/users"> users </Link>
-				{user.name} - logged in{" "}
-				<button type="button" onClick={handleLogout}>
+			<div className="space-x-5 bg-slate-900 pt-4 pb-4 pl-2 text-slate-200">
+				<Link
+					to="/"
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
+					blogs
+				</Link>
+				<Link
+					to="/users"
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
+					users
+				</Link>
+				<span>{user.name} - logged in</span>
+				<button
+					type="button"
+					onClick={handleLogout}
+					className="rounded-full bg-slate-600 px-4 py-2 hover:bg-sky-400 hover:text-sky-800"
+				>
 					logout
 				</button>
 			</div>
-			<h1>Blog app</h1>
+			<h1 className="m-5 text-4xl font-black ">Blog app</h1>
 			<Notification />
 			<Toggable
 				id="create"
@@ -492,18 +525,20 @@ const App = () => {
 			>
 				<BlogForm toggle={toggle} />
 			</Toggable>
-			<br />
-			{blogs.map(blog => (
-				<Link key={blog.id} to={`/blogs/${blog.id}`}>
-					<Blog
-						key={blog.id}
-						blog={blog}
-						updateLike={updateLike}
-						removeBlog={removeBlog}
-						user={user}
-					/>
-				</Link>
-			))}
+			<div className="">
+				{blogs.map(blog => (
+					<div key={blog.id} className="m-3 w-auto bg-slate-200 p-5">
+						<Link to={`/blogs/${blog.id}`} key={blog.id}>
+							<Blog
+								blog={blog}
+								updateLike={updateLike}
+								removeBlog={removeBlog}
+								user={user}
+							/>
+						</Link>
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }

@@ -10,14 +10,6 @@ const Blog = ({ blog /* updateLike, removeBlog, user  */ }) => {
 	// 	setVisible(!visible)
 	// }
 
-	const blogStyle = {
-		paddingTop: 10,
-		paddingLeft: 2,
-		border: "solid",
-		borderWidth: 1,
-		marginBottom: 5,
-	}
-
 	/* const handleLike = () => {
 		const blogObj = {
 			title: blog.title,
@@ -40,28 +32,24 @@ const Blog = ({ blog /* updateLike, removeBlog, user  */ }) => {
 	// const showDelete = blog.user.id === user.id ? true : false
 
 	return (
-		<>
-			<div style={blogStyle} className="blog">
-				<div style={hideWhenVisible}>
-					{blog.title} {blog.author}
-				</div>
-				{/* <div style={showWhenVisible} className="hidden">
-					{blog.title} {blog.author}
-					<button onClick={toggleVisibility}>hide</button>
-					<br />
-					{blog.url}
-					<br />
-					likes {blog.likes}{" "}
-					<button onClick={handleLike}>like</button>
-					<br />
-					{blog.author}
-					<br />
-					{showDelete && (
-						<button onClick={handleRemove}>remove</button>
-					)}
-				</div> */}
-			</div>
-		</>
+		<div style={hideWhenVisible}>
+			{blog.title} {blog.author}
+		</div>
+		// <div style={showWhenVisible} className="hidden">
+		// 		{blog.title} {blog.author}
+		// 		<button onClick={toggleVisibility}>hide</button>
+		// 		<br />
+		// 		{blog.url}
+		// 		<br />
+		// 		likes {blog.likes}{" "}
+		// 		<button onClick={handleLike}>like</button>
+		// 		<br />
+		// 		{blog.author}
+		// 		<br />
+		// 		{showDelete && (
+		// 			<button onClick={handleRemove}>remove</button>
+		// 		)}
+		// 	</div>
 	)
 }
 
