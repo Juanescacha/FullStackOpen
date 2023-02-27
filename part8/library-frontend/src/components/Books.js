@@ -1,5 +1,5 @@
-const Books = props => {
-	if (!props.show) {
+const Books = ({ show }) => {
+	if (!show) {
 		return null
 	}
 
