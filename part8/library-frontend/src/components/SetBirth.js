@@ -1,5 +1,6 @@
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { useEffect, useState } from "react"
+import Select from "react-select"
 import { ALL_AUTHORS, EDIT_AUTHOR } from "../queries"
 
 const SetBirth = ({ show }) => {
@@ -8,6 +9,7 @@ const SetBirth = ({ show }) => {
 	const [editAuthor, result] = useMutation(EDIT_AUTHOR, {
 		refetchQueries: [{ query: ALL_AUTHORS }],
 	})
+	const authors = useQuery(ALL_AUTHORS)
 
 	useEffect(() => {
 		if (result.data && result.data.editAuthor === null) {
@@ -24,6 +26,14 @@ const SetBirth = ({ show }) => {
 		setBorn("")
 	}
 
+	if (authors.loading) {
+		return <div>loading...</div>
+	}
+
+	const options = authors.data.allAuthors.map(author => {
+		return { value: author.name, label: author.name }
+	})
+
 	if (!show) {
 		return null
 	}
@@ -34,10 +44,12 @@ const SetBirth = ({ show }) => {
 			<form onSubmit={setBirth}>
 				<div>
 					name
-					<input
-						type="text"
-						value={name}
-						onChange={({ target }) => setName(target.value)}
+					<Select
+						options={options}
+						isClearable={true}
+						isSearchable={true}
+						name="name"
+						onChange={({ value }) => setName(value)}
 					/>
 				</div>
 				<div>
