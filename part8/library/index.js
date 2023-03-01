@@ -80,10 +80,6 @@ let books = [
 	},
 ]
 
-/*
-	you can remove the placeholder query once your first own has been implemented 
-*/
-
 const typeDefs = `
 type Book {
 	title: String!
