@@ -1,11 +1,8 @@
-# Course Full Stack Open
+# Full Stack Open Exercises
 
-Exercises for the course: Full Stack Open
-
-using Javascript, React, Node, Express, REST API, Typescript and more technologies
-by Juanescacha.
-
-My submission for the [Full Stack Open 2022](https://fullstackopen.com/) by the [University of Helsinki's Department of Computer Science](https://www.mooc.fi/en).
+Exercises for the course: Full Stack Open.
+Using Javascript, React, Node, Express, REST API, Typescript and more technologies by Juanescacha.
+Submission for the [Full Stack Open](https://fullstackopen.com/) by the [University of Helsinki's Department of Computer Science](https://www.mooc.fi/en).
 
 ## General info
 
