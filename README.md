@@ -1,6 +1,12 @@
-![ceritficate-till-the-moment-of-the-current-module-on-the-course](https://raw.githubusercontent.com/Juanescacha/FullStackOpen/main/certificate/certificate-2.png)
+<style type="text/css">
+ ol { list-style-type: upper-alpha; }
+</style>
 
-# COURSE Full Stack Open 2022
+# Certificate of Completion
+
+![certificate-till-the-moment-of-the-current-module-on-the-course](/certificate/certificate-part7.png)
+
+# Course Full Stack Open
 
 Exercises for the course: Full stack open 2022
 
@@ -56,7 +62,7 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 -   Testing React apps
 -   End to end -testing
 
-### Part 6: Advanzed state management
+### Part 6: Advanced state management
 
 -   Flux-architecture and Redux
 -   Many reducers
