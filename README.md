@@ -65,7 +65,6 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
  	<li>props.children and proptypes</li>
  	<li>Testing React apps</li>
 	<li>End to end -testing</li>
-	<li></li>
 </ol>
 
 ### Part 6: Advanced state management
