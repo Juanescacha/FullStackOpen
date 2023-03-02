@@ -1,10 +1,10 @@
-<style type="text/css">
- ol { list-style-type: upper-alpha; }
-</style>
-
 # Certificate of Completion
 
 ![certificate-till-the-moment-of-the-current-module-on-the-course](/certificate/certificate-part7.png)
+
+<style type="text/css">
+ ol { list-style-type: upper-alpha; }
+</style>
 
 # Course Full Stack Open
 
