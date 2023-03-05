@@ -91,18 +91,31 @@ const resolvers = {
 		bookCount: () => Book.collection.countDocuments(),
 		authorCount: () => Author.collection.countDocuments(),
 		allBooks: async (root, args) => {
-			const filteredBooks = await Book.find({})
+			const books = await Book.find({})
+			let filteredBooks = null
+			let author = null
+			if (args.author && args.genre) {
+				author = await Author.findOne({ name: args.author })
+				filteredBooks = await Book.find({
+					author: author.id,
+					genres: { $in: [args.genre] },
+				})
+				return filteredBooks
+			}
 			if (args.author) {
-				filteredBooks = filteredBooks.filter(
-					b => b.author === args.author
-				)
+				author = await Author.findOne({ name: args.author })
+				filteredBooks = await Book.find({ author: author.id })
+				return filteredBooks
 			}
+
 			if (args.genre) {
-				filteredBooks = filteredBooks.filter(b =>
-					b.genres.includes(args.genre)
-				)
+				filteredBooks = await Book.find({
+					genres: { $in: [args.genre] },
+				})
+				return filteredBooks
 			}
-			return filteredBooks
+
+			return books
 		},
 		allAuthors: async () => Author.find({}),
 		me: (root, args, context) => {
@@ -110,10 +123,15 @@ const resolvers = {
 		},
 	},
 	Author: {
-		bookCount: root => {
-			const books = Book.find({})
-			const authorBooks = books.filter(b => b.author === root.name)
-			return authorBooks.length
+		bookCount: async root => {
+			const filteredBooks = await Book.find({ author: root.id })
+			return filteredBooks.length
+		},
+	},
+	Book: {
+		author: async root => {
+			const foundAuthor = await Author.findById(root.author)
+			return foundAuthor
 		},
 	},
 	Mutation: {
