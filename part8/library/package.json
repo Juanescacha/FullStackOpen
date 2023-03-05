@@ -14,5 +14,8 @@
 		"graphql": "^16.6.0",
 		"mongoose": "^6.0.0",
 		"mongoose-unique-validator": "^3.1.0"
+	},
+	"devDependencies": {
+		"jsonwebtoken": "^9.0.0"
 	}
 }
