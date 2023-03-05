@@ -177,8 +177,9 @@ const resolvers = {
 				try {
 					await author.save()
 				} catch (error) {
-					throw new UserInputError(error.message, {
-						invalidArgs: args,
+					throw new GraphQLError("Error saving author", {
+						code: "BAD_USER_INPUT",
+						error,
 					})
 				}
 			}
@@ -190,8 +191,9 @@ const resolvers = {
 			try {
 				return await book.save()
 			} catch (error) {
-				throw new UserInputError(error.message, {
-					invalidArgs: args,
+				throw new GraphQLError("Error saving book", {
+					code: "BAD_USER_INPUT",
+					error,
 				})
 			}
 		},
@@ -206,8 +208,9 @@ const resolvers = {
 			try {
 				return await author.save()
 			} catch (error) {
-				throw new UserInputError(error.message, {
-					invalidArgs: args,
+				throw new GraphQLError("Error saving updated author", {
+					code: "BAD_USER_INPUT",
+					error,
 				})
 			}
 		},
