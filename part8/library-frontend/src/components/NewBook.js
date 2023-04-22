@@ -11,7 +11,7 @@ const NewBook = ({ show }) => {
 	const [addBook] = useMutation(ADD_BOOK, {
 		refetchQueries: [{ query: ALL_AUTHORS }, { query: ALL_BOOKS }],
 		onError: error => {
-			console.log(error.graphQLErrors[0].message)
+			console.log(error.graphQLErrors[0])
 		},
 	})
 
@@ -68,7 +68,9 @@ const NewBook = ({ show }) => {
 						value={genre}
 						onChange={({ target }) => setGenre(target.value)}
 					/>
-					<button onClick={addGenre} type="button">
+					<button
+						onClick={addGenre}
+						type="button">
 						add genre
 					</button>
 				</div>

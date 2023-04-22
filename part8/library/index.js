@@ -1,8 +1,9 @@
-const { ApolloServer, AuthenticationError } = require("@apollo/server")
+const { ApolloServer } = require("@apollo/server")
 const { startStandaloneServer } = require("@apollo/server/standalone")
 const jwt = require("jsonwebtoken")
-// Connect to MongoDB
+const { GraphQLError } = require("graphql")
 
+// Connect to MongoDB
 const mongoose = require("mongoose")
 mongoose.set("strictQuery", false)
 const Author = require("./models/author")
@@ -139,7 +140,12 @@ const resolvers = {
 			const currentUser = context.currentUser
 
 			if (!currentUser) {
-				throw new AuthenticationError("not authenticated")
+				//Auth Error
+				throw new GraphQLError("not authenticated", {
+					extensions: {
+						code: "UNAUTHENTICATED",
+					},
+				})
 			}
 
 			const authorExists = await Author.findOne({ name: args.author })
@@ -172,7 +178,12 @@ const resolvers = {
 			const currentUser = context.currentUser
 
 			if (!currentUser) {
-				throw new AuthenticationError("not authenticated")
+				//Auth Error
+				throw new GraphQLError("not authenticated", {
+					extensions: {
+						code: "UNAUTHENTICATED",
+					},
+				})
 			}
 
 			const author = await Author.findOne({ name: args.name })
@@ -204,9 +215,9 @@ const resolvers = {
 			}
 		},
 		login: async (root, args) => {
-			const User = await User.findOne({ username: args.username })
+			const user = await User.findOne({ username: args.username })
 
-			if (!User || args.password !== "secret") {
+			if (!user || args.password !== "secret") {
 				throw new GraphQLError("Wrong credentials", {
 					code: "BAD_USER_INPUT",
 				})
