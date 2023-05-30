@@ -1,0 +1,12 @@
+{
+	"name": "typescript-first-steps",
+	"version": "1.0.0",
+	"description": "Project for the exercises of part 9, about the First steps with TypeScript",
+	"main": "index.js",
+	"scripts": {
+		"ts-node": "ts-node",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Juan Esteban Camargo",
+	"license": "ISC"
+}
