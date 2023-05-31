@@ -35,31 +35,31 @@ export const calculateExercises = (
   };
 };
 
-interface CalculatorValues {
-  target: number;
-  hoursArray: Array<number>;
-}
+// interface CalculatorValues {
+//   target: number;
+//   hoursArray: Array<number>;
+// }
 
-const parseArguments = (args: Array<string>): CalculatorValues => {
-  if (args.length < 4) throw new Error("Not enough arguments");
+// const parseArguments = (args: Array<string>): CalculatorValues => {
+//   if (args.length < 4) throw new Error("Not enough arguments");
 
-  if (
-    !isNaN(Number(args[2])) &&
-    args.slice(3).every((a) => !isNaN(Number(a)))
-  ) {
-    return {
-      target: Number(args[2]),
-      hoursArray: args.slice(3).map(Number),
-    };
-  } else {
-    throw new Error("Provided values were not numbers!");
-  }
-};
+//   if (
+//     !isNaN(Number(args[2])) &&
+//     args.slice(3).every((a) => !isNaN(Number(a)))
+//   ) {
+//     return {
+//       target: Number(args[2]),
+//       hoursArray: args.slice(3).map(Number),
+//     };
+//   } else {
+//     throw new Error("Provided values were not numbers!");
+//   }
+// };
 
-try {
-  const { target, hoursArray } = parseArguments(process.argv);
-  console.log(calculateExercises(hoursArray, target));
-} catch (e: unknown) {
-  if (e instanceof Error)
-    console.log("Error, something bad happened, message: ", e.message);
-}
+// try {
+//   const { target, hoursArray } = parseArguments(process.argv);
+//   console.log(calculateExercises(hoursArray, target));
+// } catch (e: unknown) {
+//   if (e instanceof Error)
+//     console.log("Error, something bad happened, message: ", e.message);
+// }

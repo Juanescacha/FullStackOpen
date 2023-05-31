@@ -16,7 +16,6 @@ export const calculateBmi = (height: number, weight: number): string => {
   return phrase;
 };
 
-const h = Number(process.argv[2]);
-const w = Number(process.argv[3]);
-
-console.log(calculateBmi(h, w));
+// const h = Number(process.argv[2]);
+// const w = Number(process.argv[3]);
+// console.log(calculateBmi(h, w));
