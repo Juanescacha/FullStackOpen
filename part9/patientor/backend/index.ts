@@ -1,8 +1,13 @@
 import express from "express"
-const app = express()
-app.use(express.json())
+import cors from "cors"
 
-const PORT = 3000
+const app = express()
+const corsMiddleware = cors()
+
+app.use(express.json())
+app.use(corsMiddleware)
+
+const PORT = 3001
 
 app.get("/api/ping", (_req, res) => {
 	console.log("someone pinged here")
@@ -11,5 +16,4 @@ app.get("/api/ping", (_req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
-	console.log(`http://localhost:${PORT}/ping`)
 })
