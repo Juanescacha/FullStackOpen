@@ -70,7 +70,7 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => {
 		return newEntry
 	}
 
-	throw new Error("Incorrect data: a field missing")
+	throw new Error("Incorrect data: fields missing")
 }
 
 export default toNewDiaryEntry

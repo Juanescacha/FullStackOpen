@@ -1,6 +1,9 @@
+import cors from "cors"
 import express from "express"
-const app = express()
 import diaryRouter from "./routes/diaries"
+
+const app = express()
+app.use(cors())
 app.use(express.json())
 
 const PORT = 3001
