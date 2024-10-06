@@ -61,24 +61,109 @@ const EntryForm = () => {
 			<br />
 			date
 			<input
-				type="text"
+				type="date"
 				value={date}
 				onChange={e => setDate(e.target.value)}
 			/>
 			<br />
 			visibility
-			<input
-				type="text"
-				value={visibility}
-				onChange={e => setVisibility(e.target.value)}
-			/>
+			<label>
+				<input
+					type="radio"
+					name="visibility"
+					value="great"
+					checked={visibility === "great"}
+					onChange={e => setVisibility(e.target.value)}
+				/>
+				Great
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="visibility"
+					value="good"
+					checked={visibility === "good"}
+					onChange={e => setVisibility(e.target.value)}
+				/>
+				Good
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="visibility"
+					value="ok"
+					checked={visibility === "ok"}
+					onChange={e => setVisibility(e.target.value)}
+				/>
+				Ok
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="visibility"
+					value="poor"
+					checked={visibility === "poor"}
+					onChange={e => setVisibility(e.target.value)}
+				/>
+				Poor
+			</label>
 			<br />
 			weather
-			<input
+			<label>
+				<input
+					type="radio"
+					name="weather"
+					value="sunny"
+					checked={weather === "sunny"}
+					onChange={e => setWeather(e.target.value)}
+				/>
+				sunny
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="weather"
+					value="rainy"
+					checked={weather === "rainy"}
+					onChange={e => setWeather(e.target.value)}
+				/>
+				rainy
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="weather"
+					value="cloudy"
+					checked={weather === "cloudy"}
+					onChange={e => setWeather(e.target.value)}
+				/>
+				cloudy
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="weather"
+					value="stormy"
+					checked={weather === "stormy"}
+					onChange={e => setWeather(e.target.value)}
+				/>
+				stormy
+			</label>
+			<label>
+				<input
+					type="radio"
+					name="weather"
+					value="windy"
+					checked={weather === "windy"}
+					onChange={e => setWeather(e.target.value)}
+				/>
+				windy
+			</label>
+			{/* <input
 				type="text"
 				value={weather}
 				onChange={e => setWeather(e.target.value)}
-			/>
+			/> */}
 			<br />
 			comment
 			<input
