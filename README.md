@@ -30,6 +30,10 @@ Submission for the [Full Stack Open](https://fullstackopen.com/) by the [Univers
 | 7    | ✅     |
 | 8    | ✅     |
 | 9    | ✅     |
+| 10   |        |
+| 11   |        |
+| 12   |        |
+| 13   |        |
 
 ## About
 
