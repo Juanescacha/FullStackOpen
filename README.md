@@ -1,18 +1,41 @@
 # Full Stack Open Exercises
 
 Exercises for the course: Full Stack Open.
-Using Javascript, React, Node, Express, REST API, Typescript and more technologies by Juanescacha.
+Using Javascript, React, Node, Express, REST API, Typescript and more technologies by Juan Esteban Camargo.
+
 Submission for the [Full Stack Open](https://fullstackopen.com/) by the [University of Helsinki's Department of Computer Science](https://www.mooc.fi/en).
 
-## General info
+## Overview
 
-Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.
+-   **[Certificate of Completion](#certificate-of-completion)**
+-   **[Status](#status)**
+-   **[About](#general)**
+-   **[Course Content](#course-content)**
 
 ## Certificate of Completion
 
 ![certificate-till-the-moment-of-the-current-module-on-the-course](/certificate/certificate-part7.png)
 
-## Course content
+## Status
+
+| Part | Status |
+| ---- | ------ |
+| 0    | ✅     |
+| 1    | ✅     |
+| 2    | ✅     |
+| 3    | ✅     |
+| 4    | ✅     |
+| 5    | ✅     |
+| 6    | ✅     |
+| 7    | ✅     |
+| 8    | ✅     |
+| 9    | ✅     |
+
+## About
+
+Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.
+
+## Course Content
 
 ### Part 0: Fundamentals of Web apps
 
