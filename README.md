@@ -9,7 +9,7 @@ Submission for the [Full Stack Open](https://fullstackopen.com/) by the [Univers
 
 -   **[Certificate of Completion](#certificate-of-completion)**
 -   **[Status](#status)**
--   **[About](#general)**
+-   **[About](#about)**
 -   **[Course Content](#course-content)**
 
 ## Certificate of Completion
