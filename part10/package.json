@@ -1,0 +1,29 @@
+{
+	"name": "part10",
+	"version": "1.0.0",
+	"main": "node_modules/expo/AppEntry.js",
+	"scripts": {
+		"start": "expo start",
+		"android": "expo start --android",
+		"ios": "expo start --ios",
+		"web": "expo start --web",
+		"lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern"
+	},
+	"dependencies": {
+		"@expo/metro-runtime": "~3.1.1",
+		"expo": "~50.0.17",
+		"expo-status-bar": "~1.11.1",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-native": "0.73.6",
+		"react-native-web": "~0.19.6"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.0",
+		"@babel/eslint-parser": "^7.25.7",
+		"eslint": "^8.57.1",
+		"eslint-plugin-react": "^7.37.1",
+		"eslint-plugin-react-native": "^4.1.0"
+	},
+	"private": true
+}
