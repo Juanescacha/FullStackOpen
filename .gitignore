@@ -2,3 +2,4 @@
 .env
 .expo
 node_modules
+.idea
