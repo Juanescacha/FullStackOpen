@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { addLike } from "@/app/actions/blogs"
 import { getBlogById } from "@/app/services/blogs"
 
 export default async function Blog({
@@ -30,6 +31,15 @@ export default async function Blog({
 			<span>
 				<strong>LIKES: </strong>
 				{likes}
+				<form action={addLike} className="inline">
+					<input type="hidden" name="id" value={id} />
+					<button
+						type="submit"
+						className="cursor-pointer ml-2 bg-white text-black rounded-full size-5 inline-flex items-center justify-center"
+					>
+						+
+					</button>
+				</form>
 			</span>
 		</div>
 	)

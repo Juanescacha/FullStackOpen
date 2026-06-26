@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { addBlog } from "@/app/services/blogs"
+import { addBlog, addLikeById } from "@/app/services/blogs"
 
 export const createBlog = async (formData: FormData) => {
 	const blog = {
@@ -13,4 +13,11 @@ export const createBlog = async (formData: FormData) => {
 	addBlog(blog)
 	revalidatePath("/blogs")
 	redirect("/blogs")
+}
+
+export const addLike = async (formData: FormData) => {
+	const id = Number(formData.get("id"))
+	addLikeById(id)
+	revalidatePath(`/blogs/${id}`)
+	revalidatePath("/blogs")
 }
