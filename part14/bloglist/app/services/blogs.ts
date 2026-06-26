@@ -1,28 +1,28 @@
 const blogs = [
 	{
 		id: 1,
-		title: "Blog 1",
+		title: "Había una vez un rio",
 		author: "Sergio Ramos",
 		url: "https://google.com",
 		likes: 10,
 	},
 	{
 		id: 2,
-		title: "Blog 2",
+		title: "Batman vs Superman",
 		author: "Julius Caesar",
 		url: "https://facebook.com",
 		likes: 20,
 	},
 	{
 		id: 3,
-		title: "Blog 3",
+		title: "Destinado a la Guerra",
 		author: "Jimmy Neutron",
 		url: "https://youtube.com",
 		likes: 30,
 	},
 	{
 		id: 4,
-		title: "Blog 4",
+		title: "Mil Maneras de Morir",
 		author: "Albert Einstein",
 		url: "https://yahoo.com",
 		likes: 10,
