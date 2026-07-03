@@ -8,7 +8,7 @@ export default async function Blogs({
 	searchParams: Promise<{ filter?: string }>
 }) {
 	const { filter } = await searchParams
-	let blogs = getBlogs().sort((a, b) => b.likes - a.likes)
+	let blogs = await getBlogs().then((x) => x.sort((a, b) => b.likes - a.likes))
 
 	blogs = filter
 		? blogs.filter((blog) =>

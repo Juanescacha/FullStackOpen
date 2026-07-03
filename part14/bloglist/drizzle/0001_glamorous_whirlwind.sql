@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" ALTER COLUMN "likes" SET NOT NULL;
