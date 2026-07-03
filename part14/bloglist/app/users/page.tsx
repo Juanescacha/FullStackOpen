@@ -7,7 +7,11 @@ export default async function Users() {
 	return (
 		<div className="flex flex-col gap-2">
 			{users.map(({ id, name, username }) => (
-				<Link href={`users/${id}`} key={id} className="flex flex-col max-w-fit">
+				<Link
+					href={`users/${username}`}
+					key={id}
+					className="flex flex-col max-w-fit"
+				>
 					<span className="font-bold">{username}</span>
 					<span className="text-sm">{name}</span>
 				</Link>
