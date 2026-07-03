@@ -32,6 +32,7 @@ export default function RootLayout({
 				<header>
 					<nav className="flex gap-4 p-4 font-bold">
 						<Link href="/">Home</Link>|<Link href="/blogs">Blogs</Link>|
+						<Link href="/users">Users</Link>|
 						<Link href="/blogs/new">New Blog</Link>
 					</nav>
 				</header>

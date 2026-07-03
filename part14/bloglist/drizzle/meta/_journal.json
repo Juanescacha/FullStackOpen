@@ -15,6 +15,13 @@
       "when": 1783101871096,
       "tag": "0001_glamorous_whirlwind",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783104611047,
+      "tag": "0002_worried_famine",
+      "breakpoints": true
     }
   ]
 }
