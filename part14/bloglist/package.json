@@ -13,14 +13,17 @@
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^1.1.0",
+		"bcryptjs": "^3.0.3",
 		"drizzle-orm": "^0.45.2",
 		"next": "16.2.9",
+		"next-auth": "5.0.0-beta.31",
 		"react": "19.2.4",
 		"react-dom": "19.2.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.1",
 		"@tailwindcss/postcss": "^4",
+		"@types/bcryptjs": "^3.0.0",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",

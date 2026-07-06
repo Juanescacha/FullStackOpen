@@ -3,8 +3,12 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { addBlog, addLikeById } from "@/app/services/blogs"
+import { auth } from "@/auth"
 
 export const createBlog = async (formData: FormData) => {
+	const session = await auth()
+	if (!session) redirect("/login")
+
 	const blog = {
 		title: formData.get("title") as string,
 		author: formData.get("author") as string,
