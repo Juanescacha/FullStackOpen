@@ -4,7 +4,16 @@ import { useActionState } from "react"
 import { createBlog } from "@/app/actions/blogs"
 
 export default function NewBlog() {
-	const [state, formAction] = useActionState(createBlog, { error: "" })
+	const initialState = {
+		error: "",
+		values: {
+			title: "",
+			author: "",
+			url: "",
+		},
+	}
+
+	const [state, formAction] = useActionState(createBlog, initialState)
 
 	return (
 		<form action={formAction} className="flex flex-col gap-2">
@@ -15,7 +24,8 @@ export default function NewBlog() {
 					name="title"
 					placeholder="Title"
 					className="bg-zinc-900 rounded p-2"
-					minLength={5}
+					defaultValue={state.values?.title}
+					// minLength={5}
 					required
 				/>
 			</label>
@@ -26,7 +36,8 @@ export default function NewBlog() {
 					name="author"
 					placeholder="Author"
 					className="bg-zinc-900 rounded p-2"
-					minLength={5}
+					defaultValue={state.values?.author}
+					// minLength={5}
 					required
 				/>
 			</label>
@@ -37,7 +48,8 @@ export default function NewBlog() {
 					name="url"
 					placeholder="Url"
 					className="bg-zinc-900 rounded p-2"
-					minLength={5}
+					defaultValue={state.values?.url}
+					// minLength={5}
 					required
 				/>
 			</label>

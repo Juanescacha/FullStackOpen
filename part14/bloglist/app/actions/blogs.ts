@@ -20,7 +20,10 @@ export const createBlog = async (
 
 	for (const [key, value] of Object.entries(blog)) {
 		if (!value || value.length < 5) {
-			return { error: `Blog ${key} must be at least 5 characters` }
+			return {
+				error: `Blog ${key} must be at least 5 characters`,
+				values: blog,
+			}
 		}
 	}
 
