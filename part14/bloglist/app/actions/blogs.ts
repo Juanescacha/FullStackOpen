@@ -8,7 +8,8 @@ import { auth } from "@/auth"
 export const createBlog = async (
 	prevState: {
 		error: string
-		values: { title: string; author: string; url: string }
+		values?: { title: string; author: string; url: string }
+		success: boolean
 	},
 	formData: FormData,
 ) => {
@@ -26,13 +27,17 @@ export const createBlog = async (
 			return {
 				error: `Blog ${key} must be at least 5 characters`,
 				values: blog,
+				success: false,
 			}
 		}
 	}
 
 	await addBlog(blog)
 	revalidatePath("/blogs")
-	redirect("/blogs")
+	return {
+		error: "",
+		success: true,
+	}
 }
 
 export const addLike = async (formData: FormData) => {

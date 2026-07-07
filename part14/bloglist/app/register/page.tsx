@@ -28,7 +28,7 @@ export default function RegisterPage() {
 						placeholder="Username"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.username}
-						// minLength={4}
+						minLength={4}
 						required
 					/>
 				</label>
@@ -40,7 +40,7 @@ export default function RegisterPage() {
 						placeholder="Name"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.name}
-						// minLength={4}
+						minLength={4}
 						required
 					/>
 				</label>
@@ -52,7 +52,7 @@ export default function RegisterPage() {
 						placeholder="password"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.password}
-						// minLength={4}
+						minLength={4}
 						required
 					/>
 				</label>
