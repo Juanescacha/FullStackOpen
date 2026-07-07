@@ -25,7 +25,7 @@ export default function NewBlog() {
 					placeholder="Title"
 					className="bg-zinc-900 rounded p-2"
 					defaultValue={state.values?.title}
-					// minLength={5}
+					minLength={5}
 					required
 				/>
 			</label>
@@ -37,7 +37,7 @@ export default function NewBlog() {
 					placeholder="Author"
 					className="bg-zinc-900 rounded p-2"
 					defaultValue={state.values?.author}
-					// minLength={5}
+					minLength={5}
 					required
 				/>
 			</label>
@@ -49,7 +49,7 @@ export default function NewBlog() {
 					placeholder="Url"
 					className="bg-zinc-900 rounded p-2"
 					defaultValue={state.values?.url}
-					// minLength={5}
+					minLength={5}
 					required
 				/>
 			</label>
