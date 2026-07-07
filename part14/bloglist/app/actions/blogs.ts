@@ -5,7 +5,10 @@ import { redirect } from "next/navigation"
 import { addBlog, addLikeById } from "@/app/services/blogs"
 import { auth } from "@/auth"
 
-export const createBlog = async (formData: FormData) => {
+export const createBlog = async (
+	prevState: { error: string },
+	formData: FormData,
+) => {
 	const session = await auth()
 	if (!session) redirect("/login")
 
@@ -14,6 +17,13 @@ export const createBlog = async (formData: FormData) => {
 		author: formData.get("author") as string,
 		url: formData.get("url") as string,
 	}
+
+	for (const [key, value] of Object.entries(blog)) {
+		if (!value || value.length < 5) {
+			return { error: `Blog ${key} must be at least 5 characters` }
+		}
+	}
+
 	await addBlog(blog)
 	revalidatePath("/blogs")
 	redirect("/blogs")

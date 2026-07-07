@@ -1,8 +1,13 @@
+"use client"
+
+import { useActionState } from "react"
 import { createBlog } from "@/app/actions/blogs"
 
 export default function NewBlog() {
+	const [state, formAction] = useActionState(createBlog, { error: "" })
+
 	return (
-		<form action={createBlog} className="flex flex-col gap-2">
+		<form action={formAction} className="flex flex-col gap-2">
 			<label className="space-x-4">
 				<span>Title:</span>
 				<input
@@ -10,6 +15,7 @@ export default function NewBlog() {
 					name="title"
 					placeholder="Title"
 					className="bg-zinc-900 rounded p-2"
+					minLength={5}
 					required
 				/>
 			</label>
@@ -20,6 +26,7 @@ export default function NewBlog() {
 					name="author"
 					placeholder="Author"
 					className="bg-zinc-900 rounded p-2"
+					minLength={5}
 					required
 				/>
 			</label>
@@ -30,6 +37,7 @@ export default function NewBlog() {
 					name="url"
 					placeholder="Url"
 					className="bg-zinc-900 rounded p-2"
+					minLength={5}
 					required
 				/>
 			</label>
@@ -39,6 +47,7 @@ export default function NewBlog() {
 			>
 				Create
 			</button>
+			{state.error && <p className="text-red-500">{state.error}</p>}
 		</form>
 	)
 }
