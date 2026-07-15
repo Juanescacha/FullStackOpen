@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { useActionState, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { generateToken, getApiToken } from "@/app/actions/users"
 
 export default function MePage() {
