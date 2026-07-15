@@ -13,7 +13,7 @@ export default function NavBar() {
 				<Link href="/users">Users</Link>|
 				{session ? (
 					<>
-						<Link href="/blogs/new">New Blog</Link>|
+						<Link href="/blogs/new">New Blog</Link>|<Link href="/me">Me</Link>|
 						<em>{session.user?.name} logged in</em>|
 						<button type="button" onClick={() => signOut()}>
 							logout

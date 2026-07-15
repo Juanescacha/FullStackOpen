@@ -20,17 +20,14 @@ export default async function Blogs({
 
 	return (
 		<div className="flex flex-col gap-2">
-			<form action={filterBlog} className="space-x-2">
+			<form action={filterBlog} className="flex gap-2">
 				<input
 					type="text"
 					name="filter"
 					placeholder="filter"
-					className="bg-zinc-900 rounded p-2"
+					className="w-full bg-zinc-900 rounded p-2"
 				/>
-				<button
-					type="submit"
-					className="max-w-fit bg-zinc-800 px-3 py-2 rounded-lg"
-				>
+				<button type="submit" className="bg-zinc-800 px-3 py-2 rounded-lg">
 					search
 				</button>
 			</form>

@@ -29,38 +29,38 @@ export default function NewBlog() {
 	}, [state, showNotification, router])
 
 	return (
-		<form action={formAction} className="flex flex-col gap-2">
-			<label className="space-x-4">
+		<form action={formAction} className="flex flex-col gap-2 mx-auto">
+			<label className="flex items-center justify-between">
 				<span>Title:</span>
 				<input
 					type="text"
 					name="title"
 					placeholder="Title"
-					className="bg-zinc-900 rounded p-2"
+					className="bg-zinc-900 rounded p-2 w-3/4"
 					defaultValue={state.values?.title}
 					minLength={5}
 					required
 				/>
 			</label>
-			<label className="space-x-4">
+			<label className="flex items-center justify-between">
 				<span>Author:</span>
 				<input
 					type="text"
 					name="author"
 					placeholder="Author"
-					className="bg-zinc-900 rounded p-2"
+					className="bg-zinc-900 rounded p-2 w-3/4"
 					defaultValue={state.values?.author}
 					minLength={5}
 					required
 				/>
 			</label>
-			<label className="space-x-4">
+			<label className="flex items-center justify-between">
 				<span>Url:</span>
 				<input
 					type="text"
 					name="url"
 					placeholder="Url"
-					className="bg-zinc-900 rounded p-2"
+					className="bg-zinc-900 rounded p-2 w-3/4"
 					defaultValue={state.values?.url}
 					minLength={5}
 					required

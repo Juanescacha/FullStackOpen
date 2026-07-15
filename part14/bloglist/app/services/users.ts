@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm"
+import { getCurrentUser } from "@/app/services/session"
 import { db } from "@/db"
 import { users } from "@/db/schema"
 
@@ -15,4 +16,16 @@ export const getUserWithBlogsByUsername = async (username: string) => {
 		where: eq(users.username, username),
 		with: { blogs: true },
 	})
+}
+
+export const addToken = async (token: string) => {
+	const user = await getCurrentUser()
+	if (!user) throw new Error("Not logged in")
+	return db.update(users).set({ token }).where(eq(users.id, user.id))
+}
+
+export const getToken = async () => {
+	const user = await getCurrentUser()
+	if (!user) return null
+	return user.token ?? null
 }

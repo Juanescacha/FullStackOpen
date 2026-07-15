@@ -29,6 +29,13 @@
       "when": 1783123478233,
       "tag": "0003_short_master_chief",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784134320701,
+      "tag": "0004_rich_mother_askani",
+      "breakpoints": true
     }
   ]
 }

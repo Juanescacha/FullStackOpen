@@ -37,7 +37,7 @@ export default function RootLayout({
 					<NotificationProvider>
 						<NavBar />
 						<Notification />
-						<main className="p-4">{children}</main>
+						<main className="p-4 mx-auto max-w-xl w-full">{children}</main>
 					</NotificationProvider>
 				</AuthSessionProvider>
 			</body>
