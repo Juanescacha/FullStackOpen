@@ -12,7 +12,11 @@
 		"check": "biome check --write ."
 	},
 	"dependencies": {
+		"@mdx-js/loader": "^3.1.1",
+		"@mdx-js/react": "^3.1.1",
 		"@neondatabase/serverless": "^1.1.0",
+		"@next/mdx": "^16.2.10",
+		"@types/mdx": "^2.0.14",
 		"bcryptjs": "^3.0.3",
 		"drizzle-orm": "^0.45.2",
 		"next": "16.2.9",
@@ -23,6 +27,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.1",
 		"@tailwindcss/postcss": "^4",
+		"@tailwindcss/typography": "^0.5.20",
 		"@types/bcryptjs": "^3.0.0",
 		"@types/node": "^20",
 		"@types/react": "^19",
