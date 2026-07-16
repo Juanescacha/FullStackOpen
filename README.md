@@ -34,6 +34,7 @@ Submission for the [Full Stack Open](https://fullstackopen.com/) by the [Univers
 | 11   |        |
 | 12   |        |
 | 13   |        |
+| 14   | ✅     |
 
 ## About
 
