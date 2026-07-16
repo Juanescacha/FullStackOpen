@@ -1,7 +1,11 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import Link from "next/link"
+import type { ReactNode } from "react"
+import NavBar from "@/app/components/NavBar"
+import Notification from "@/app/components/Notification"
+import { NotificationProvider } from "@/app/components/NotificationContext"
+import AuthSessionProvider from "@/app/components/SessionProvider"
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -21,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode
+	children: ReactNode
 }>) {
 	return (
 		<html
@@ -29,13 +33,13 @@ export default function RootLayout({
 			className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
 		>
 			<body className="min-h-full flex flex-col">
-				<header>
-					<nav className="flex gap-4 p-4 font-bold">
-						<Link href="/">Home</Link>|<Link href="/blogs">Blogs</Link>|
-						<Link href="/blogs/new">New Blog</Link>
-					</nav>
-				</header>
-				<main className="p-4">{children}</main>
+				<AuthSessionProvider>
+					<NotificationProvider>
+						<NavBar />
+						<Notification />
+						<main className="p-4 mx-auto max-w-xl w-full">{children}</main>
+					</NotificationProvider>
+				</AuthSessionProvider>
 			</body>
 		</html>
 	)

@@ -9,21 +9,37 @@
 		"lint": "eslint",
 		"format": "biome format --write .",
 		"lint:biome": "biome lint .",
-		"check": "biome check --write ."
+		"check": "biome check --write .",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui"
 	},
 	"dependencies": {
+		"@mdx-js/loader": "^3.1.1",
+		"@mdx-js/react": "^3.1.1",
+		"@neondatabase/serverless": "^1.1.0",
+		"@next/mdx": "^16.2.10",
+		"@types/mdx": "^2.0.14",
+		"bcryptjs": "^3.0.3",
+		"drizzle-orm": "^0.45.2",
 		"next": "16.2.9",
+		"next-auth": "5.0.0-beta.31",
 		"react": "19.2.4",
 		"react-dom": "19.2.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.1",
+		"@playwright/test": "^1.61.1",
 		"@tailwindcss/postcss": "^4",
+		"@tailwindcss/typography": "^0.5.20",
+		"@types/bcryptjs": "^3.0.0",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"dotenv": "^17.4.2",
+		"drizzle-kit": "^0.31.10",
 		"eslint": "^9",
 		"eslint-config-next": "16.2.9",
+		"postgres": "^3.4.9",
 		"tailwindcss": "^4",
 		"typescript": "^5"
 	}

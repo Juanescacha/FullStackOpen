@@ -1,53 +1,66 @@
-const blogs = [
-	{
-		id: 1,
-		title: "Había una vez un rio",
-		author: "Sergio Ramos",
-		url: "https://google.com",
-		likes: 10,
-	},
-	{
-		id: 2,
-		title: "Batman vs Superman",
-		author: "Julius Caesar",
-		url: "https://facebook.com",
-		likes: 20,
-	},
-	{
-		id: 3,
-		title: "Destinado a la Guerra",
-		author: "Jimmy Neutron",
-		url: "https://youtube.com",
-		likes: 30,
-	},
-	{
-		id: 4,
-		title: "Mil Maneras de Morir",
-		author: "Albert Einstein",
-		url: "https://yahoo.com",
-		likes: 10,
-	},
-]
+import { and, eq } from "drizzle-orm"
+import { getCurrentUser } from "@/app/services/session"
+import { db } from "@/db"
+import { blogs, readingList } from "@/db/schema"
 
-let nextId = 5
-
-export const getBlogs = () => {
-	return blogs
+export const getBlogs = async () => {
+	return db.query.blogs.findMany()
 }
 
-export const addBlog = (blog: {
+export const addBlog = async (blog: {
 	title: string
 	author: string
 	url: string
 }) => {
-	blogs.push({ ...blog, id: nextId++, likes: 0 })
+	const user = await getCurrentUser()
+
+	if (!user) throw new Error("Not logged in")
+	const [newBlog] = await db
+		.insert(blogs)
+		.values({ ...blog, userId: user.id })
+		.returning()
+
+	return newBlog
 }
 
-export const getBlogById = (id: number) => {
-	return blogs.find((blog) => blog.id === id)
+export const getBlogById = async (id: number) => {
+	return db.query.blogs.findFirst({ where: eq(blogs.id, id) })
 }
 
-export const addLikeById = (id: number) => {
-	const blog = blogs.find((blog) => blog.id === id)
-	if (blog) blog.likes += 1
+export const addLikeById = async (id: number) => {
+	const blog = await getBlogById(id)
+	if (blog)
+		await db
+			.update(blogs)
+			.set({ likes: blog.likes + 1 })
+			.where(eq(blogs.id, id))
+}
+
+export const addToReadingList = async (blogId: number, userId: number) => {
+	const [newReadingListEntry] = await db
+		.insert(readingList)
+		.values({ blogId, userId })
+		.returning()
+	return newReadingListEntry
+}
+
+export const isBlogInReadingList = async (blogId: number, userId: number) => {
+	const entry = await db.query.readingList.findFirst({
+		where: and(eq(readingList.blogId, blogId), eq(readingList.userId, userId)),
+	})
+
+	return !!entry
+}
+
+export const readReadingList = async (blogId: number, userId: number) => {
+	const entry = await db.query.readingList.findFirst({
+		where: and(eq(readingList.blogId, blogId), eq(readingList.userId, userId)),
+	})
+
+	if (entry) {
+		await db
+			.update(readingList)
+			.set({ read: true })
+			.where(eq(readingList.id, entry.id))
+	}
 }
