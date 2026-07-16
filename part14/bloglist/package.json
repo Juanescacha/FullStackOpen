@@ -9,7 +9,9 @@
 		"lint": "eslint",
 		"format": "biome format --write .",
 		"lint:biome": "biome lint .",
-		"check": "biome check --write ."
+		"check": "biome check --write .",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui"
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.1.1",
@@ -26,6 +28,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.1",
+		"@playwright/test": "^1.61.1",
 		"@tailwindcss/postcss": "^4",
 		"@tailwindcss/typography": "^0.5.20",
 		"@types/bcryptjs": "^3.0.0",

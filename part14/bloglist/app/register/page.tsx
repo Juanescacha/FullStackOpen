@@ -4,8 +4,14 @@ import { useActionState } from "react"
 import { createAccount } from "@/app/actions/account"
 
 export default function RegisterPage() {
-	const initialState = {
-		error: "",
+	type ActionState = Parameters<typeof createAccount>[0]
+
+	const initialState: ActionState = {
+		errors: {
+			username: undefined,
+			name: undefined,
+			password: undefined,
+		},
 		values: {
 			username: "",
 			name: "",
@@ -21,43 +27,50 @@ export default function RegisterPage() {
 			<h2 className="text-3xl font-bold mb-2">Register</h2>
 			<form action={formAction} className="flex flex-col gap-2">
 				<label className="space-x-4">
-					<span>Username:</span>
+					<span>Username</span>
 					<input
 						type="text"
 						name="username"
 						placeholder="Username"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.username}
-						minLength={4}
 						required
 					/>
 				</label>
+				{state.errors?.username && (
+					<p className="text-red-500" data-testid="username-error">
+						{state.errors.username}
+					</p>
+				)}
 				<label className="space-x-4">
-					<span>Name:</span>
+					<span>Name</span>
 					<input
 						type="text"
 						name="name"
 						placeholder="Name"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.name}
-						minLength={4}
 						required
 					/>
 				</label>
+				{state.errors?.name && (
+					<p className="text-red-500" data-testid="name-error">
+						{state.errors.name}
+					</p>
+				)}
 				<label className="space-x-4">
-					<span>Password:</span>
+					<span>Password</span>
 					<input
 						type="password"
 						name="password"
 						placeholder="password"
 						className="bg-zinc-900 rounded p-2"
 						defaultValue={state.values?.password}
-						minLength={4}
 						required
 					/>
 				</label>
 				<label className="space-x-4">
-					<span>Password Confirm:</span>
+					<span>Confirm Password</span>
 					<input
 						type="password"
 						name="passwordConfirm"
@@ -67,13 +80,18 @@ export default function RegisterPage() {
 						required
 					/>
 				</label>
+				{state.errors?.password && (
+					<p className="text-red-500" data-testid="passwordConfirm-error">
+						{state.errors.password}
+					</p>
+				)}
 				<button
 					type="submit"
 					className="max-w-fit bg-zinc-800 px-3 py-2 rounded-lg"
+					data-testid="register-button"
 				>
 					Create Account
 				</button>
-				{state.error && <p className="text-red-500">{state.error}</p>}
 			</form>
 		</div>
 	)

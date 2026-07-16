@@ -7,7 +7,9 @@ export const blogs = pgTable("blogs", {
 	author: text("author").notNull(),
 	url: text("url").notNull(),
 	likes: integer("likes").default(0).notNull(),
-	userId: integer("user_id").references(() => users.id),
+	userId: integer("user_id").references(() => users.id, {
+		onDelete: "cascade",
+	}),
 })
 
 export const users = pgTable("users", {
@@ -21,10 +23,10 @@ export const users = pgTable("users", {
 export const readingList = pgTable("reading_list", {
 	id: serial("id").primaryKey(),
 	userId: integer("user_id")
-		.references(() => users.id)
+		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
 	blogId: integer("blog_id")
-		.references(() => blogs.id)
+		.references(() => blogs.id, { onDelete: "cascade" })
 		.notNull(),
 	read: boolean("read").default(false),
 })

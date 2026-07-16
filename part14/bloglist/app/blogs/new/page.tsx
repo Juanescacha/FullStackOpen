@@ -31,7 +31,7 @@ export default function NewBlog() {
 	return (
 		<form action={formAction} className="flex flex-col gap-2 mx-auto">
 			<label className="flex items-center justify-between">
-				<span>Title:</span>
+				<span>Title</span>
 				<input
 					type="text"
 					name="title"
@@ -43,7 +43,7 @@ export default function NewBlog() {
 				/>
 			</label>
 			<label className="flex items-center justify-between">
-				<span>Author:</span>
+				<span>Author</span>
 				<input
 					type="text"
 					name="author"
@@ -55,7 +55,7 @@ export default function NewBlog() {
 				/>
 			</label>
 			<label className="flex items-center justify-between">
-				<span>Url:</span>
+				<span>URL</span>
 				<input
 					type="text"
 					name="url"
@@ -69,6 +69,7 @@ export default function NewBlog() {
 			<button
 				type="submit"
 				className="max-w-fit bg-zinc-800 px-3 py-2 rounded-lg"
+				data-testid="create-blog-button"
 			>
 				Create
 			</button>

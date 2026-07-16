@@ -9,11 +9,11 @@ export default function NavBar() {
 	return (
 		<header>
 			<nav className="flex gap-4 p-4 font-bold">
-				<Link href="/">Home</Link>|<Link href="/blogs">Blogs</Link>|
-				<Link href="/users">Users</Link>|
+				<Link href="/">home</Link>|<Link href="/blogs">blogs</Link>|
+				<Link href="/users">users</Link>|
 				{session ? (
 					<>
-						<Link href="/blogs/new">New Blog</Link>|<Link href="/me">Me</Link>|
+						<Link href="/blogs/new">new blog</Link>|<Link href="/me">me</Link>|
 						<em>{session.user?.name} logged in</em>|
 						<button type="button" onClick={() => signOut()}>
 							logout
@@ -21,8 +21,8 @@ export default function NavBar() {
 					</>
 				) : (
 					<>
-						<Link href="/login">Login</Link>|
-						<Link href="/register">Register</Link>
+						<Link href="/login">login</Link>|
+						<Link href="/register">register</Link>
 					</>
 				)}
 			</nav>

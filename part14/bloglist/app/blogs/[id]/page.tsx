@@ -22,12 +22,12 @@ export default async function Blog({
 	const { title, author, url, likes } = blog
 
 	return (
-		<div className="flex flex-col">
-			<span>
+		<div className="flex flex-col" data-testid="blog-detail">
+			<span data-testid="blog-title">
 				<strong>TITLE: </strong>
 				{title}
 			</span>
-			<span>
+			<span data-testid="blog-author">
 				<strong>AUTHOR: </strong>
 				{author}
 			</span>
@@ -54,6 +54,7 @@ export default async function Blog({
 					<button
 						type="submit"
 						className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white rounded px-2 py-1 items-center justify-center"
+						data-testid="add-to-reading-list-button"
 					>
 						Add to Reading List
 					</button>

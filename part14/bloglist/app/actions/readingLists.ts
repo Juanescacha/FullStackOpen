@@ -8,16 +8,14 @@ import { getCurrentUser } from "@/app/services/session"
 import { auth } from "@/auth"
 
 export const addBlogToReadingList = async (formData: FormData) => {
-	const session = await auth()
 	const user = await getCurrentUser()
-	if (!session || !user) redirect("/login")
+	if (!user) redirect("/login")
 
 	const blogId = Number(formData.get("blogId"))
 
 	await addToReadingList(blogId, user.id)
 	revalidatePath(`/blogs/${blogId}`)
 	revalidatePath("/blogs")
-	redirect(`/blogs/${blogId}`)
 }
 
 export const getReadingListBlogs = async () => {

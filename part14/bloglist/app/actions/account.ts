@@ -8,7 +8,11 @@ import { users } from "@/db/schema"
 
 export const createAccount = async (
 	prevState: {
-		error: string
+		errors: {
+			username?: string
+			name?: string
+			password?: string
+		}
 		values: {
 			username: string
 			name: string
@@ -27,19 +31,25 @@ export const createAccount = async (
 
 	if (!values.username || values.username.length < 4)
 		return {
-			error: "Username must be at least 4 characters",
+			errors: {
+				username: "Username must be at least 4 characters",
+			},
 			values,
 		}
 
 	if (!values.name || values.name.length < 4)
 		return {
-			error: "Name must be at least 4 characters",
+			errors: {
+				name: "Name must be at least 4 characters",
+			},
 			values,
 		}
 
 	if (!values.password || values.password !== values.passwordConfirm)
 		return {
-			error: "Password must match confirmation",
+			errors: {
+				password: "Password must match confirmation",
+			},
 			values,
 		}
 
@@ -49,7 +59,9 @@ export const createAccount = async (
 
 	if (user && user.username === values.username)
 		return {
-			error: "Username already exists",
+			errors: {
+				username: "Username already exists",
+			},
 			values,
 		}
 
