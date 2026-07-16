@@ -36,6 +36,20 @@
       "when": 1784134320701,
       "tag": "0004_rich_mother_askani",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1784157786738,
+      "tag": "0005_stormy_salo",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1784157888834,
+      "tag": "0006_mysterious_shinobi_shaw",
+      "breakpoints": true
     }
   ]
 }

@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { addBlog, addLikeById } from "@/app/services/blogs"
+import { addBlog, addLikeById, addToReadingList } from "@/app/services/blogs"
+import { getCurrentUser } from "@/app/services/session"
 import { auth } from "@/auth"
 
 export const createBlog = async (
@@ -13,30 +14,42 @@ export const createBlog = async (
 	},
 	formData: FormData,
 ) => {
-	const session = await auth()
-	if (!session) redirect("/login")
+	try {
+		const session = await auth()
+		const user = await getCurrentUser()
+		if (!session || !user) redirect("/login")
 
-	const blog = {
-		title: formData.get("title") as string,
-		author: formData.get("author") as string,
-		url: formData.get("url") as string,
-	}
+		const blog = {
+			title: formData.get("title") as string,
+			author: formData.get("author") as string,
+			url: formData.get("url") as string,
+		}
 
-	for (const [key, value] of Object.entries(blog)) {
-		if (!value || value.length < 5) {
-			return {
-				error: `Blog ${key} must be at least 5 characters`,
-				values: blog,
-				success: false,
+		for (const [key, value] of Object.entries(blog)) {
+			if (!value || value.length < 5) {
+				return {
+					error: `Blog ${key} must be at least 5 characters`,
+					values: blog,
+					success: false,
+				}
 			}
 		}
-	}
 
-	await addBlog(blog)
-	revalidatePath("/blogs")
-	return {
-		error: "",
-		success: true,
+		const newBlog = await addBlog(blog)
+		await addToReadingList(newBlog.id, user.id)
+		revalidatePath("/blogs")
+		revalidatePath(`/blogs/${newBlog.id}`)
+		revalidatePath(`/me`)
+
+		return {
+			error: "",
+			success: true,
+		}
+	} catch (error) {
+		return {
+			error: `An error occurred while creating the blog: ${error}`,
+			success: false,
+		}
 	}
 }
 

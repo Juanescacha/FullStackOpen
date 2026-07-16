@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation"
 import { addLike } from "@/app/actions/blogs"
-import { getBlogById } from "@/app/services/blogs"
+import { addBlogToReadingList } from "@/app/actions/readingLists"
+import { getBlogById, isBlogInReadingList } from "@/app/services/blogs"
+import { getCurrentUser } from "@/app/services/session"
 
 export default async function Blog({
 	params,
@@ -9,8 +11,13 @@ export default async function Blog({
 }) {
 	const { id } = await params
 	const blog = await getBlogById(Number(id))
+	const user = await getCurrentUser()
 
 	if (!blog) notFound()
+
+	const isNotInReadingList = user
+		? !(await isBlogInReadingList(Number(id), user.id))
+		: false
 
 	const { title, author, url, likes } = blog
 
@@ -41,6 +48,17 @@ export default async function Blog({
 					</button>
 				</form>
 			</span>
+			{isNotInReadingList && (
+				<form action={addBlogToReadingList}>
+					<input type="hidden" name="blogId" value={id} />
+					<button
+						type="submit"
+						className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white rounded px-2 py-1 items-center justify-center"
+					>
+						Add to Reading List
+					</button>
+				</form>
+			)}
 		</div>
 	)
 }

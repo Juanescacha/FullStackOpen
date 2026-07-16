@@ -2,14 +2,17 @@
 
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
+import { getReadingListBlogs } from "@/app/actions/readingLists"
 import { generateToken, getApiToken } from "@/app/actions/users"
 
 export default function MePage() {
 	const { data: session } = useSession()
 	const [token, setToken] = useState<string | null>(null)
+	const [readingListBlogs, setReadingListBlogs] = useState<any[]>([])
 
 	useEffect(() => {
 		getApiToken().then(setToken)
+		getReadingListBlogs().then(setReadingListBlogs)
 	}, [])
 
 	const handleGenerate = async () => {
@@ -39,6 +42,13 @@ export default function MePage() {
 					Generate Token
 				</button>
 			)}
+			<hr />
+			<h2 className="font-bold">Reading List</h2>
+			{readingListBlogs.map((item) => (
+				<div key={item.id} className="bg-white/10 px-4 py-2 rounded">
+					{item.title}
+				</div>
+			))}
 		</div>
 	)
 }

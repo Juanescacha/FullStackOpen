@@ -1,7 +1,7 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { getCurrentUser } from "@/app/services/session"
 import { db } from "@/db"
-import { blogs } from "@/db/schema"
+import { blogs, readingList } from "@/db/schema"
 
 export const getBlogs = async () => {
 	return db.query.blogs.findMany()
@@ -15,7 +15,12 @@ export const addBlog = async (blog: {
 	const user = await getCurrentUser()
 
 	if (!user) throw new Error("Not logged in")
-	return db.insert(blogs).values({ ...blog, userId: user.id })
+	const [newBlog] = await db
+		.insert(blogs)
+		.values({ ...blog, userId: user.id })
+		.returning()
+
+	return newBlog
 }
 
 export const getBlogById = async (id: number) => {
@@ -29,4 +34,20 @@ export const addLikeById = async (id: number) => {
 			.update(blogs)
 			.set({ likes: blog.likes + 1 })
 			.where(eq(blogs.id, id))
+}
+
+export const addToReadingList = async (blogId: number, userId: number) => {
+	const [newReadingListEntry] = await db
+		.insert(readingList)
+		.values({ blogId, userId })
+		.returning()
+	return newReadingListEntry
+}
+
+export const isBlogInReadingList = async (blogId: number, userId: number) => {
+	const entry = await db.query.readingList.findFirst({
+		where: and(eq(readingList.blogId, blogId), eq(readingList.userId, userId)),
+	})
+
+	return !!entry
 }
