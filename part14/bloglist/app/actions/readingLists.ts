@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { addToReadingList } from "@/app/services/blogs"
+import { addToReadingList, readReadingList } from "@/app/services/blogs"
 import { getReadingLists } from "@/app/services/readingLists"
 import { getCurrentUser } from "@/app/services/session"
 import { auth } from "@/auth"
@@ -25,5 +25,18 @@ export const getReadingListBlogs = async () => {
 	if (!user) return []
 
 	const list = await getReadingLists(String(user.id))
-	return list.map((entry) => entry.blog).filter(Boolean)
+	return list
+		.map((entry) => ({
+			...entry.blog,
+			read: entry.read,
+		}))
+		.filter(Boolean)
+}
+
+export const markAsRead = async (blogId: number) => {
+	const user = await getCurrentUser()
+	if (!user) redirect("/login")
+
+	await readReadingList(blogId, user.id)
+	revalidatePath("/me")
 }

@@ -2,22 +2,33 @@
 
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
-import { getReadingListBlogs } from "@/app/actions/readingLists"
+import { getReadingListBlogs, markAsRead } from "@/app/actions/readingLists"
 import { generateToken, getApiToken } from "@/app/actions/users"
 
 export default function MePage() {
 	const { data: session } = useSession()
 	const [token, setToken] = useState<string | null>(null)
-	const [readingListBlogs, setReadingListBlogs] = useState<any[]>([])
+	const [readingListBlogs, setReadingListBlogs] = useState<
+		Awaited<ReturnType<typeof getReadingListBlogs>>
+	>([])
 
 	useEffect(() => {
 		getApiToken().then(setToken)
 		getReadingListBlogs().then(setReadingListBlogs)
 	}, [])
 
+	const unreadBlogs = readingListBlogs.filter((blog) => !blog.read)
+	const readBlogs = readingListBlogs.filter((blog) => blog.read)
+
 	const handleGenerate = async () => {
 		const newToken = await generateToken()
 		setToken(newToken)
+	}
+
+	const handleMarkAsRead = async (blogId: number) => {
+		await markAsRead(blogId)
+		const updatedList = await getReadingListBlogs()
+		setReadingListBlogs(updatedList)
 	}
 
 	return (
@@ -44,9 +55,31 @@ export default function MePage() {
 			)}
 			<hr />
 			<h2 className="font-bold">Reading List</h2>
-			{readingListBlogs.map((item) => (
-				<div key={item.id} className="bg-white/10 px-4 py-2 rounded">
-					{item.title}
+			<h3>Unread ({unreadBlogs.length})</h3>
+			{unreadBlogs.map((blog) => (
+				<div
+					key={blog.id}
+					className="bg-white/10 px-4 py-2 min-h-12 rounded flex justify-between items-center"
+				>
+					{blog.title}
+					{!blog.read && (
+						<button
+							type="button"
+							onClick={() => handleMarkAsRead(blog.id)}
+							className="bg-blue-500 text-white px-2 py-1 rounded"
+						>
+							Mark as Read
+						</button>
+					)}
+				</div>
+			))}
+			<h3>Read ({readBlogs.length})</h3>
+			{readBlogs.map((blog) => (
+				<div
+					key={blog.id}
+					className="bg-white/10 px-4 py-2 min-h-12 rounded flex justify-between items-center"
+				>
+					{blog.title}
 				</div>
 			))}
 		</div>

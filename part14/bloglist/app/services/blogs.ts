@@ -51,3 +51,16 @@ export const isBlogInReadingList = async (blogId: number, userId: number) => {
 
 	return !!entry
 }
+
+export const readReadingList = async (blogId: number, userId: number) => {
+	const entry = await db.query.readingList.findFirst({
+		where: and(eq(readingList.blogId, blogId), eq(readingList.userId, userId)),
+	})
+
+	if (entry) {
+		await db
+			.update(readingList)
+			.set({ read: true })
+			.where(eq(readingList.id, entry.id))
+	}
+}
